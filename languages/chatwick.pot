@@ -1,0 +1,582 @@
+# Copyright (C) 2026 Massamba MBAYE
+# This file is distributed under the GPL v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Chatwick 1.7.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/chatwick\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-07-08T11:17:12+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Domain: chatwick\n"
+
+#. Plugin Name of the plugin
+#: chatwick.php
+#: admin/views/settings-page.php:52
+#: includes/class-admin-settings.php:36
+#: includes/class-admin-settings.php:37
+msgid "Chatwick"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: chatwick.php
+msgid "https://chatwick.app/"
+msgstr ""
+
+#. Description of the plugin
+#: chatwick.php
+msgid "Add an AI chatbot to any site, powered by the Chatwick Cloud service (prepaid credits — no AI key to manage)."
+msgstr ""
+
+#. Author of the plugin
+#: chatwick.php
+msgid "Massamba MBAYE"
+msgstr ""
+
+#. Author URI of the plugin
+#: chatwick.php
+msgid "https://www.linkedin.com/in/massamba-mbaye/"
+msgstr ""
+
+#: admin/views/conversation-detail.php:14
+msgid "Session introuvable."
+msgstr ""
+
+#: admin/views/conversation-detail.php:22
+msgid "Conversation"
+msgstr ""
+
+#: admin/views/conversation-detail.php:28
+msgid "Retour à la liste"
+msgstr ""
+
+#: admin/views/conversation-detail.php:34
+#: admin/views/conversations-page.php:32
+msgid "Mode"
+msgstr ""
+
+#: admin/views/conversation-detail.php:38
+msgid "Créée le"
+msgstr ""
+
+#: admin/views/conversation-detail.php:45
+msgid "Aucun message."
+msgstr ""
+
+#: admin/views/conversation-detail.php:53
+#: admin/views/conversations-page.php:31
+msgid "Utilisateur"
+msgstr ""
+
+#: admin/views/conversation-detail.php:53
+#: admin/views/settings-page.php:156
+msgid "Assistant"
+msgstr ""
+
+#: admin/views/conversation-detail.php:68
+#: admin/views/conversations-page.php:77
+msgid "Supprimer cette conversation ?"
+msgstr ""
+
+#: admin/views/conversation-detail.php:69
+msgid "Supprimer cette conversation"
+msgstr ""
+
+#: admin/views/conversations-page.php:19
+#: includes/class-admin-conversations.php:36
+#: includes/class-admin-conversations.php:37
+msgid "Conversations"
+msgstr ""
+
+#: admin/views/conversations-page.php:23
+msgid "Conversation supprimée."
+msgstr ""
+
+#: admin/views/conversations-page.php:30
+#: admin/views/logs-page.php:25
+msgid "Session"
+msgstr ""
+
+#: admin/views/conversations-page.php:33
+msgid "Messages"
+msgstr ""
+
+#: admin/views/conversations-page.php:34
+msgid "Dernière activité"
+msgstr ""
+
+#: admin/views/conversations-page.php:35
+msgid "Actions"
+msgstr ""
+
+#: admin/views/conversations-page.php:41
+msgid "Aucune conversation."
+msgstr ""
+
+#: admin/views/conversations-page.php:55
+msgid "Anonyme"
+msgstr ""
+
+#: admin/views/conversations-page.php:69
+msgid "Voir"
+msgstr ""
+
+#: admin/views/conversations-page.php:78
+#: admin/views/settings-page.php:187
+msgid "Supprimer"
+msgstr ""
+
+#: admin/views/kb-page.php:16
+#: includes/class-admin-kb.php:38
+#: includes/class-admin-kb.php:39
+msgid "Base de connaissances"
+msgstr ""
+
+#: admin/views/kb-page.php:19
+msgid "Indexez le contenu de votre site pour que l'assistant réponde à partir de vos pages, articles et produits. Le contenu est envoyé à Chatwick (qui le découpe et l'indexe) ; rien n'est stocké sur ce site."
+msgstr ""
+
+#: admin/views/kb-page.php:23
+msgid "Types de contenu enregistrés."
+msgstr ""
+
+#: admin/views/kb-page.php:28
+msgid "Renseignez d'abord votre clé de compte Chatwick dans le menu « Réglages » : la synchronisation en a besoin."
+msgstr ""
+
+#: admin/views/kb-page.php:32
+msgid "Contenu à indexer"
+msgstr ""
+
+#: admin/views/kb-page.php:46
+msgid "Enregistrer la sélection"
+msgstr ""
+
+#: admin/views/kb-page.php:51
+#: admin/views/kb-page.php:60
+msgid "Synchroniser maintenant"
+msgstr ""
+
+#: admin/views/kb-page.php:53
+msgid "Parcourt le contenu sélectionné par lots et l'envoie à Chatwick. Vous pouvez relancer à tout moment : seul le contenu modifié est réindexé."
+msgstr ""
+
+#: admin/views/kb-page.php:75
+msgid "Synchronisation automatique"
+msgstr ""
+
+#: admin/views/kb-page.php:77
+msgid "Activée : dès qu'un contenu est publié, modifié, dépublié ou supprimé, la base est mise à jour automatiquement (en tâche de fond). La synchronisation manuelle ci-dessus ne sert donc qu'à la première indexation ou après un changement de sélection."
+msgstr ""
+
+#. translators: %d = nombre de contenus en attente.
+#: admin/views/kb-page.php:85
+msgid "%d contenu en attente de synchronisation automatique."
+msgid_plural "%d contenus en attente de synchronisation automatique."
+msgstr[0] ""
+msgstr[1] ""
+
+#: admin/views/kb-page.php:87
+msgid "(traité en tâche de fond dans la minute qui suit)"
+msgstr ""
+
+#: admin/views/kb-page.php:89
+msgid "Aucun contenu en attente : la base est à jour."
+msgstr ""
+
+#: admin/views/logs-page.php:19
+#: includes/class-admin-logs.php:34
+#: includes/class-admin-logs.php:35
+msgid "Logs API"
+msgstr ""
+
+#: admin/views/logs-page.php:24
+msgid "Date"
+msgstr ""
+
+#: admin/views/logs-page.php:26
+msgid "Modèle"
+msgstr ""
+
+#: admin/views/logs-page.php:27
+msgid "Tokens prompt"
+msgstr ""
+
+#: admin/views/logs-page.php:28
+msgid "Tokens completion"
+msgstr ""
+
+#: admin/views/logs-page.php:29
+msgid "Total tokens"
+msgstr ""
+
+#: admin/views/logs-page.php:35
+msgid "Aucun log."
+msgstr ""
+
+#: admin/views/logs-page.php:52
+msgid "Totaux"
+msgstr ""
+
+#: admin/views/settings-page.php:16
+#: public/class-chatbot-widget.php:91
+msgid "Bonjour ! Comment puis-je vous aider ?"
+msgstr ""
+
+#: admin/views/settings-page.php:55
+msgid "Réglages enregistrés."
+msgstr ""
+
+#: admin/views/settings-page.php:58
+msgid "Toutes les conversations ont été supprimées."
+msgstr ""
+
+#: admin/views/settings-page.php:66
+msgid "Chatbot en ligne."
+msgstr ""
+
+#: admin/views/settings-page.php:66
+msgid "Votre assistant répond à vos visiteurs."
+msgstr ""
+
+#: admin/views/settings-page.php:70
+#: includes/class-admin-settings.php:83
+msgid "Connecté à Chatwick."
+msgstr ""
+
+#: admin/views/settings-page.php:70
+#: includes/class-admin-settings.php:84
+msgid "Activez le chatbot (étape 4) pour l'afficher sur le site."
+msgstr ""
+
+#: admin/views/settings-page.php:74
+msgid "Configuration requise."
+msgstr ""
+
+#: admin/views/settings-page.php:74
+msgid "Connectez votre compte Chatwick pour activer le chatbot."
+msgstr ""
+
+#: admin/views/settings-page.php:82
+msgid "Crédits :"
+msgstr ""
+
+#: admin/views/settings-page.php:84
+msgid "Recharger"
+msgstr ""
+
+#: admin/views/settings-page.php:95
+msgid "Mise en route"
+msgstr ""
+
+#: admin/views/settings-page.php:96
+msgid "Quatre étapes pour mettre votre assistant en ligne."
+msgstr ""
+
+#: admin/views/settings-page.php:102
+msgid "Créez votre compte Chatwick"
+msgstr ""
+
+#: admin/views/settings-page.php:102
+msgid "25 conversations offertes"
+msgstr ""
+
+#: admin/views/settings-page.php:103
+msgid "Gratuit, sans carte bancaire. Vous obtiendrez une clé de compte à coller à l'étape 2."
+msgstr ""
+
+#: admin/views/settings-page.php:104
+msgid "Créer un compte (gratuit)"
+msgstr ""
+
+#: admin/views/settings-page.php:112
+msgid "Connectez votre clé"
+msgstr ""
+
+#: admin/views/settings-page.php:113
+msgid "Collez la clé de compte récupérée sur Chatwick, puis testez la connexion."
+msgstr ""
+
+#: admin/views/settings-page.php:118
+msgid "Tester la connexion"
+msgstr ""
+
+#: admin/views/settings-page.php:121
+msgid "Gérer mes crédits / Recharger"
+msgstr ""
+
+#: admin/views/settings-page.php:124
+msgid "La clé reste chiffrée. Aucune clé OpenAI ou Anthropic à fournir. Laissez vide pour conserver la valeur actuelle."
+msgstr ""
+
+#: admin/views/settings-page.php:132
+msgid "Personnalisez l'assistant"
+msgstr ""
+
+#: admin/views/settings-page.php:133
+msgid "Décrivez le rôle et le ton de votre bot. Modifiable à tout moment dans l'onglet « Assistant »."
+msgstr ""
+
+#: admin/views/settings-page.php:134
+msgid "Personnaliser le ton →"
+msgstr ""
+
+#: admin/views/settings-page.php:142
+msgid "Activez le chatbot"
+msgstr ""
+
+#: admin/views/settings-page.php:143
+msgid "Affichez la bulle de chat sur votre site. Choisissez les pages dans l'onglet « Affichage »."
+msgstr ""
+
+#: admin/views/settings-page.php:147
+msgid "Afficher le chatbot sur le site"
+msgstr ""
+
+#: admin/views/settings-page.php:157
+msgid "Apparence"
+msgstr ""
+
+#: admin/views/settings-page.php:158
+msgid "Affichage"
+msgstr ""
+
+#: admin/views/settings-page.php:159
+msgid "Avancé"
+msgstr ""
+
+#: admin/views/settings-page.php:165
+msgid "Instructions de l'assistant (persona)"
+msgstr ""
+
+#: admin/views/settings-page.php:167
+msgid "Ex. : Tu es l'assistant du site Exemple. Réponds en français, de façon concise et chaleureuse, à propos de nos services."
+msgstr ""
+
+#: admin/views/settings-page.php:168
+msgid "transmis à Chatwick à chaque message."
+msgstr ""
+
+#: admin/views/settings-page.php:171
+msgid "Message de bienvenue"
+msgstr ""
+
+#: admin/views/settings-page.php:180
+msgid "Icône de la bulle"
+msgstr ""
+
+#: admin/views/settings-page.php:186
+msgid "Choisir une image"
+msgstr ""
+
+#: admin/views/settings-page.php:188
+msgid "Remplace l'icône par défaut dans la bulle flottante. Taille recommandée : 56×56 px."
+msgstr ""
+
+#: admin/views/settings-page.php:192
+msgid "Titre du widget"
+msgstr ""
+
+#: admin/views/settings-page.php:196
+msgid "Couleur principale"
+msgstr ""
+
+#: admin/views/settings-page.php:200
+msgid "Position"
+msgstr ""
+
+#: admin/views/settings-page.php:203
+msgid "Bas droite"
+msgstr ""
+
+#: admin/views/settings-page.php:204
+msgid "Bas gauche"
+msgstr ""
+
+#: admin/views/settings-page.php:215
+msgid "Où afficher le chatbot"
+msgstr ""
+
+#: admin/views/settings-page.php:217
+msgid "Sur toutes les pages"
+msgstr ""
+
+#: admin/views/settings-page.php:218
+msgid "Uniquement sur les pages sélectionnées"
+msgstr ""
+
+#: admin/views/settings-page.php:219
+msgid "Sur toutes les pages sauf les sélectionnées"
+msgstr ""
+
+#: admin/views/settings-page.php:223
+msgid "Pages"
+msgstr ""
+
+#: admin/views/settings-page.php:234
+msgid "Aucune page trouvée."
+msgstr ""
+
+#: admin/views/settings-page.php:237
+msgid "Le shortcode [ai_chatbot] fonctionne toujours indépendamment de cette règle."
+msgstr ""
+
+#: admin/views/settings-page.php:247
+msgid "Suggestions de questions"
+msgstr ""
+
+#: admin/views/settings-page.php:250
+msgid "Une suggestion par ligne. Affichées comme boutons cliquables au démarrage du chat."
+msgstr ""
+
+#: admin/views/settings-page.php:254
+msgid "Durée du cookie (jours)"
+msgstr ""
+
+#: admin/views/settings-page.php:261
+msgid "Enregistrer les réglages"
+msgstr ""
+
+#: admin/views/settings-page.php:266
+msgid "Zone de danger"
+msgstr ""
+
+#: admin/views/settings-page.php:267
+msgid "Cette action supprime définitivement toutes les conversations et logs."
+msgstr ""
+
+#: admin/views/settings-page.php:271
+msgid "Vider toutes les conversations"
+msgstr ""
+
+#: chatwick.php:68
+msgid "Chatwick requires PHP 7.4 or higher."
+msgstr ""
+
+#: chatwick.php:73
+msgid "Chatwick requires WordPress 6.0 or higher."
+msgstr ""
+
+#: includes/class-admin-conversations.php:71
+#: includes/class-admin-kb.php:65
+#: includes/class-admin-kb.php:86
+#: includes/class-admin-settings.php:111
+#: includes/class-admin-settings.php:177
+#: includes/class-rest-api.php:73
+#: includes/class-rest-api.php:161
+#: includes/class-rest-api.php:221
+msgid "Accès refusé."
+msgstr ""
+
+#: includes/class-admin-settings.php:81
+msgid "Test en cours…"
+msgstr ""
+
+#: includes/class-admin-settings.php:82
+msgid "Êtes-vous sûr de vouloir supprimer toutes les conversations ?"
+msgstr ""
+
+#: includes/class-admin-settings.php:85
+msgid "conversations"
+msgstr ""
+
+#: includes/class-admin-settings.php:86
+msgid "indisponible"
+msgstr ""
+
+#: includes/class-api-router.php:33
+msgid "Clé de compte Chatwick non configurée."
+msgstr ""
+
+#: includes/class-cloud-chat.php:86
+msgid "Réponse Cloud inattendue."
+msgstr ""
+
+#: includes/class-kb-sync.php:239
+msgid "Clé de compte Chatwick manquante (menu Réglages)."
+msgstr ""
+
+#: includes/class-rest-api.php:48
+msgid "Le chatbot est désactivé."
+msgstr ""
+
+#: includes/class-rest-api.php:172
+msgid "Clé de compte manquante. Enregistrez d'abord les réglages."
+msgstr ""
+
+#: includes/class-rest-api.php:200
+msgid "Connexion réussie ✓ (clé valide)"
+msgstr ""
+
+#: includes/class-rest-api.php:227
+msgid "Clé de compte non configurée."
+msgstr ""
+
+#: includes/class-security.php:40
+msgid "Nonce invalide."
+msgstr ""
+
+#: includes/class-security.php:62
+msgid "Trop de requêtes. Veuillez patienter."
+msgstr ""
+
+#: includes/class-security.php:83
+msgid "Le message ne peut pas être vide."
+msgstr ""
+
+#. translators: %d: maximum number of characters allowed
+#: includes/class-security.php:91
+msgid "Le message dépasse la limite de %d caractères."
+msgstr ""
+
+#: public/class-chatbot-widget.php:90
+#: public/views/chatbot-widget.php:14
+msgid "Assistant IA"
+msgstr ""
+
+#: public/class-chatbot-widget.php:96
+#: public/views/chatbot-widget.php:104
+msgid "Écrivez votre message…"
+msgstr ""
+
+#: public/class-chatbot-widget.php:97
+#: public/views/chatbot-widget.php:112
+msgid "Envoyer"
+msgstr ""
+
+#: public/class-chatbot-widget.php:98
+msgid "Une erreur est survenue. Veuillez réessayer."
+msgstr ""
+
+#. translators: %s: chatbot widget title
+#: public/views/chatbot-widget.php:27
+msgid "Open %s"
+msgstr ""
+
+#: public/views/chatbot-widget.php:71
+msgid "En ligne"
+msgstr ""
+
+#: public/views/chatbot-widget.php:76
+msgid "Fermer"
+msgstr ""
+
+#: public/views/chatbot-widget.php:87
+msgid "Défiler vers le bas"
+msgstr ""
+
+#: public/views/chatbot-widget.php:94
+msgid "Suggestions"
+msgstr ""
+
+#: public/views/chatbot-widget.php:105
+msgid "Message"
+msgstr ""
+
+#: public/views/chatbot-widget.php:108
+msgid "Effacer"
+msgstr ""

@@ -1,0 +1,597 @@
+/**
+ * WordPress AI Chatbot — Frontend widget styles.
+ */
+
+/* ── CSS custom properties ─────────────────────────────────────────────────── */
+
+:root {
+    --waicb-color:        #C49A2E;
+    --waicb-color-dark:   #9E7B1F;
+    --waicb-radius:       16px;
+    --waicb-shadow:       0 8px 32px rgba(0, 0, 0, .18);
+    --waicb-z:            99999;
+    --waicb-panel-width:  380px;
+    --waicb-panel-height: 560px;
+}
+
+/* ── Bubble ─────────────────────────────────────────────────────────────────── */
+
+.waicb-bubble {
+    position:        fixed;
+    bottom:          24px;
+    width:           56px;
+    height:          56px;
+    border-radius:   50%;
+    background:      var(--waicb-color);
+    color:           #fff;
+    display:         flex;
+    align-items:     center;
+    justify-content: center;
+    cursor:          pointer;
+    z-index:         var(--waicb-z);
+    box-shadow:      var(--waicb-shadow);
+    transition:      transform .2s ease, background .2s ease;
+    user-select:     none;
+    border:          none;
+    outline:         none;
+}
+
+.waicb-bubble:hover,
+.waicb-bubble:focus-visible {
+    background:  var(--waicb-color-dark, #9E7B1F);
+    transform:   scale(1.08);
+}
+
+.waicb-pos-bottom-right.waicb-bubble { right: 24px; }
+.waicb-pos-bottom-left.waicb-bubble  { left:  24px; }
+
+/* ── Panel ──────────────────────────────────────────────────────────────────── */
+
+.waicb-panel {
+    position:      fixed;
+    bottom:        96px;
+    width:         var(--waicb-panel-width);
+    height:        var(--waicb-panel-height);
+    background:    #fff;
+    border-radius: var(--waicb-radius);
+    box-shadow:    var(--waicb-shadow);
+    display:       flex;
+    flex-direction: column;
+    z-index:       var(--waicb-z);
+    overflow:      hidden;
+    /* Hidden by default — JS toggles waicb-panel--open */
+    opacity:       0;
+    transform:     translateY(16px) scale(.97);
+    pointer-events: none;
+    transition:    opacity .22s ease, transform .22s ease;
+}
+
+.waicb-pos-bottom-right.waicb-panel { right: 24px; }
+.waicb-pos-bottom-left.waicb-panel  { left:  24px; }
+
+.waicb-panel--open {
+    opacity:        1;
+    transform:      translateY(0) scale(1);
+    pointer-events: all;
+}
+
+/* Inline / shortcode panel — always visible, static. */
+.waicb-panel--inline {
+    position:  relative;
+    bottom:    auto;
+    right:     auto;
+    left:      auto;
+    width:     100%;
+    max-width: var(--waicb-panel-width);
+    height:    var(--waicb-panel-height);
+    margin:    0 auto;
+    box-shadow: var(--waicb-shadow);
+}
+
+/* ── Header ─────────────────────────────────────────────────────────────────── */
+
+.waicb-panel__header {
+    display:         flex;
+    align-items:     center;
+    justify-content: space-between;
+    padding:         12px 16px;
+    background:      var(--waicb-color);
+    color:           #fff;
+    flex-shrink:     0;
+    gap:             8px;
+}
+
+.waicb-panel__header-info {
+    display:     flex;
+    align-items: center;
+    gap:         10px;
+    min-width:   0;
+}
+
+.waicb-panel__header-avatar {
+    width:           36px;
+    height:          36px;
+    border-radius:   50%;
+    background:      rgba(255, 255, 255, .2);
+    display:         flex;
+    align-items:     center;
+    justify-content: center;
+    flex-shrink:     0;
+}
+
+.waicb-panel__header-text {
+    display:   flex;
+    flex-direction: column;
+    gap:       2px;
+    min-width: 0;
+}
+
+.waicb-panel__title {
+    font-weight:   600;
+    font-size:     15px;
+    line-height:   1.2;
+    white-space:   nowrap;
+    overflow:      hidden;
+    text-overflow: ellipsis;
+}
+
+.waicb-panel__subtitle {
+    display:     flex;
+    align-items: center;
+    gap:         5px;
+    font-size:   11px;
+    opacity:     .85;
+    line-height: 1;
+}
+
+/* Status dot — pulsing green */
+.waicb-status-dot {
+    width:         7px;
+    height:        7px;
+    border-radius: 50%;
+    background:    #4ade80;
+    flex-shrink:   0;
+    animation:     waicb-pulse 2s infinite ease-in-out;
+}
+
+@keyframes waicb-pulse {
+    0%, 100% { opacity: 1;   transform: scale(1); }
+    50%       { opacity: .6; transform: scale(.85); }
+}
+
+.waicb-panel__close {
+    background:  transparent;
+    border:      none;
+    color:       #fff;
+    font-size:   22px;
+    line-height: 1;
+    cursor:      pointer;
+    padding:     0 2px;
+    opacity:     .8;
+    transition:  opacity .15s;
+    flex-shrink: 0;
+}
+
+.waicb-panel__close:hover { opacity: 1; }
+
+/* ── Messages area ──────────────────────────────────────────────────────────── */
+
+.waicb-panel__messages {
+    flex:       1;
+    overflow-y: auto;
+    padding:    16px;
+    display:    flex;
+    flex-direction: column;
+    gap:        10px;
+    scroll-behavior: smooth;
+}
+
+/* ── Message bubbles ────────────────────────────────────────────────────────── */
+
+.waicb-msg {
+    display:   flex;
+    gap:       8px;
+    max-width: 84%;
+    animation: waicb-msg-in .22s ease both;
+}
+
+@keyframes waicb-msg-in {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.waicb-msg--assistant {
+    align-self: flex-start;
+}
+
+.waicb-msg--user {
+    align-self:     flex-end;
+    flex-direction: row-reverse;
+}
+
+.waicb-msg--error {
+    align-self: flex-start;
+}
+
+/* Avatar */
+.waicb-msg__avatar {
+    width:           28px;
+    height:          28px;
+    border-radius:   50%;
+    background:      var(--waicb-color);
+    color:           #fff;
+    display:         flex;
+    align-items:     center;
+    justify-content: center;
+    flex-shrink:     0;
+    align-self:      flex-end;
+    margin-bottom:   18px; /* aligns with bottom of bubble above meta */
+}
+
+/* Body */
+.waicb-msg__body {
+    display:        flex;
+    flex-direction: column;
+    gap:            3px;
+    min-width:      0;
+}
+
+.waicb-msg__content {
+    padding:      10px 14px;
+    border-radius: 14px;
+    font-size:    14px;
+    line-height:  1.55;
+    word-break:   break-word;
+}
+
+.waicb-msg--assistant .waicb-msg__content {
+    background:                #f3f4f6;
+    color:                     #111827;
+    border-bottom-left-radius: 4px;
+}
+
+.waicb-msg--user .waicb-msg__content {
+    background:                 var(--waicb-color);
+    color:                      #fff;
+    border-bottom-right-radius: 4px;
+}
+
+.waicb-msg--error .waicb-msg__content {
+    background:    #fee2e2;
+    color:         #991b1b;
+    border-radius: 10px;
+}
+
+/* Timestamp + tick */
+.waicb-msg__meta {
+    display:     flex;
+    align-items: center;
+    gap:         4px;
+    font-size:   10px;
+    color:       #9ca3af;
+    padding:     0 4px;
+}
+
+.waicb-msg--user .waicb-msg__meta {
+    justify-content: flex-end;
+}
+
+.waicb-tick {
+    font-size:   11px;
+    line-height: 1;
+}
+
+.waicb-tick--sent      { color: #9ca3af; }
+.waicb-tick--delivered { color: var(--waicb-color); }
+
+/* Links inside messages */
+.waicb-msg a {
+    color:           var(--waicb-color);
+    text-decoration: underline;
+    word-break:      break-all;
+}
+
+.waicb-msg--user a {
+    color: rgba(255, 255, 255, .9);
+}
+
+/* Phone numbers */
+.waicb-phone,
+.waicb-msg a.waicb-phone {
+    color:           var(--waicb-color);
+    text-decoration: none;
+    font-weight:     600;
+    white-space:     nowrap;
+    border-bottom:   1.5px solid var(--waicb-color);
+    transition:      opacity .15s;
+}
+
+.waicb-phone:hover {
+    opacity: .75;
+}
+
+.waicb-msg--user .waicb-phone {
+    color:             #fff;
+    border-bottom-color: rgba(255, 255, 255, .5);
+}
+
+/* Inline code inside messages */
+.waicb-msg code {
+    background:    rgba(0, 0, 0, .08);
+    border-radius: 4px;
+    padding:       1px 4px;
+    font-size:     .9em;
+    font-family:   monospace;
+}
+
+.waicb-msg strong { font-weight: 700; }
+.waicb-msg em     { font-style:  italic; }
+
+.waicb-msg .waicb-h1,
+.waicb-msg .waicb-h2,
+.waicb-msg .waicb-h3 {
+    font-weight:   700;
+    line-height:   1.3;
+    margin:        6px 0 2px;
+}
+.waicb-msg .waicb-h1 { font-size: 1.1em; }
+.waicb-msg .waicb-h2 { font-size: 1em;   }
+.waicb-msg .waicb-h3 { font-size: .95em; }
+
+.waicb-msg ul {
+    margin:     6px 0 0 16px;
+    padding:    0;
+    list-style: disc;
+}
+
+.waicb-msg ul li { margin-bottom: 2px; }
+
+/* Google Maps embed */
+.waicb-map-embed {
+    margin-top:    10px;
+    border-radius: 8px;
+    overflow:      hidden;
+    width:         100%;
+}
+
+.waicb-map-embed iframe {
+    width:   100%;
+    height:  220px;
+    border:  0;
+    display: block;
+}
+
+/* Wider bubble when it contains a map */
+.waicb-msg:has(.waicb-map-embed) {
+    max-width: 95%;
+}
+
+/* ── Typing indicator ───────────────────────────────────────────────────────── */
+
+.waicb-typing {
+    display:     flex;
+    align-items: flex-end;
+    gap:         8px;
+    align-self:  flex-start;
+}
+
+.waicb-msg__avatar--typing {
+    margin-bottom: 0;
+}
+
+.waicb-typing__dots {
+    display:       flex;
+    gap:           5px;
+    align-items:   center;
+    padding:       10px 14px;
+    background:    #f3f4f6;
+    border-radius: 14px 14px 14px 4px;
+}
+
+.waicb-typing__dots span {
+    display:       block;
+    width:         8px;
+    height:        8px;
+    border-radius: 50%;
+    background:    #9ca3af;
+    animation:     waicb-bounce .9s infinite ease-in-out;
+}
+
+.waicb-typing__dots span:nth-child(2) { animation-delay: .15s; }
+.waicb-typing__dots span:nth-child(3) { animation-delay: .30s; }
+
+@keyframes waicb-bounce {
+    0%, 80%, 100% { transform: translateY(0); }
+    40%            { transform: translateY(-6px); }
+}
+
+/* ── Scroll-to-bottom button ────────────────────────────────────────────────── */
+
+.waicb-scroll-btn {
+    position:        absolute;
+    bottom:          115px; /* above footer */
+    left:            50%;
+    transform:       translateX(-50%) translateY(8px);
+    background:      #fff;
+    border:          1px solid #e5e7eb;
+    border-radius:   50%;
+    width:           32px;
+    height:          32px;
+    display:         flex;
+    align-items:     center;
+    justify-content: center;
+    cursor:          pointer;
+    box-shadow:      0 2px 8px rgba(0, 0, 0, .12);
+    color:           #374151;
+    z-index:         1;
+    opacity:         0;
+    pointer-events:  none;
+    transition:      opacity .2s ease, transform .2s ease;
+}
+
+.waicb-scroll-btn--visible {
+    opacity:        1;
+    pointer-events: all;
+    transform:      translateX(-50%) translateY(0);
+}
+
+.waicb-scroll-btn:hover {
+    background: #f3f4f6;
+}
+
+/* ── Quick replies ──────────────────────────────────────────────────────────── */
+
+.waicb-quick-replies {
+    display:         none;
+    flex-wrap:       wrap;
+    gap:             6px;
+    padding:         8px 16px;
+    border-top:      1px solid #f3f4f6;
+    flex-shrink:     0;
+}
+
+.waicb-quick-replies--visible {
+    display: flex;
+}
+
+.waicb-quick-reply {
+    background:    #fff;
+    border:        1.5px solid var(--waicb-color);
+    color:         var(--waicb-color);
+    border-radius: 20px;
+    padding:       5px 12px;
+    font-size:     12px;
+    font-family:   inherit;
+    cursor:        pointer;
+    transition:    background .15s, color .15s;
+    white-space:   nowrap;
+}
+
+.waicb-quick-reply:hover {
+    background: var(--waicb-color);
+    color:      #fff;
+}
+
+/* ── Footer / input ─────────────────────────────────────────────────────────── */
+
+.waicb-panel__footer {
+    display:     flex;
+    gap:         8px;
+    padding:     10px 12px 4px;
+    border-top:  1px solid #e5e7eb;
+    align-items: flex-end;
+    flex-shrink: 0;
+}
+
+.waicb-panel__footer-meta {
+    padding:     0 12px 8px;
+    display:     flex;
+    justify-content: flex-end;
+    flex-shrink: 0;
+}
+
+.waicb-input-wrap {
+    flex:     1;
+    position: relative;
+    display:  flex;
+}
+
+.waicb-input {
+    flex:          1;
+    resize:        none;
+    border:        1px solid #d1d5db;
+    border-radius: 10px;
+    padding:       9px 32px 9px 12px; /* right padding for clear button */
+    font-size:     14px;
+    font-family:   inherit;
+    line-height:   1.5;
+    outline:       none;
+    transition:    border-color .15s;
+    max-height:    120px;
+    overflow-y:    auto;
+}
+
+.waicb-input:focus {
+    border-color: var(--waicb-color);
+}
+
+/* Clear input button */
+.waicb-clear-input {
+    position:    absolute;
+    right:       8px;
+    top:         50%;
+    transform:   translateY(-50%);
+    background:  transparent;
+    border:      none;
+    color:       #9ca3af;
+    font-size:   18px;
+    line-height: 1;
+    cursor:      pointer;
+    padding:     0;
+    opacity:     0;
+    pointer-events: none;
+    transition:  opacity .15s, color .15s;
+}
+
+.waicb-clear-input--visible {
+    opacity:        1;
+    pointer-events: all;
+}
+
+.waicb-clear-input:hover { color: #374151; }
+
+/* Char counter */
+.waicb-char-counter {
+    font-size: 11px;
+    color:     #9ca3af;
+}
+
+.waicb-char-counter--warn { color: #ef4444; }
+
+.waicb-send-btn {
+    flex-shrink: 0;
+    width:       40px;
+    height:      40px;
+    border-radius: 50%;
+    background:  var(--waicb-color);
+    border:      none;
+    color:       #fff;
+    cursor:      pointer;
+    display:     flex;
+    align-items: center;
+    justify-content: center;
+    transition:  background .15s, transform .1s;
+}
+
+.waicb-send-btn:hover  { background: var(--waicb-color-dark, #9E7B1F); }
+.waicb-send-btn:active { transform: scale(.93); }
+
+.waicb-send-btn:disabled {
+    opacity: .5;
+    cursor:  default;
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────────────── */
+
+@media ( max-width: 480px ) {
+    .waicb-panel {
+        width:         100%;
+        height:        100%;
+        bottom:        0;
+        right:         0 !important;
+        left:          0 !important;
+        border-radius: 0;
+    }
+
+    .waicb-panel--inline {
+        max-width: 100%;
+        height:    var(--waicb-panel-height);
+    }
+
+    .waicb-bubble {
+        bottom: 16px;
+    }
+
+    .waicb-pos-bottom-right.waicb-bubble { right: 16px; }
+    .waicb-pos-bottom-left.waicb-bubble  { left:  16px; }
+}

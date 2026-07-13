@@ -1,0 +1,198 @@
+/**
+ * WordPress AI Chatbot — Admin styles.
+ */
+
+/* ── Settings page ─────────────────────────────────────────────────────────── */
+
+.waicb-settings-wrap h2 {
+    margin-top: 2em;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #dcdcde;
+}
+
+/* ── Danger zone ───────────────────────────────────────────────────────────── */
+
+.waicb-danger-zone {
+    margin-top: 2em;
+    padding: 16px 20px;
+    background: #fef2f2;
+    border: 1px solid #fca5a5;
+    border-radius: 4px;
+}
+
+.waicb-danger-zone h2 {
+    margin-top: 0;
+    color: #991b1b;
+    border-bottom-color: #fca5a5;
+}
+
+.waicb-btn-danger {
+    background: #dc2626 !important;
+    border-color: #b91c1c !important;
+    color: #fff !important;
+}
+
+.waicb-btn-danger:hover {
+    background: #b91c1c !important;
+}
+
+/* ── Conversation detail ───────────────────────────────────────────────────── */
+
+.waicb-conversation-view {
+    max-width: 680px;
+    margin-top: 20px;
+    padding: 16px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+}
+
+.waicb-msg {
+    margin-bottom: 14px;
+}
+
+.waicb-msg__meta {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+    margin-bottom: 4px;
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.waicb-msg__meta strong {
+    font-size: 13px;
+    color: #111827;
+}
+
+.waicb-msg__content {
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.waicb-msg--user .waicb-msg__content {
+    background: #dbeafe;
+    margin-left: 20%;
+}
+
+.waicb-msg--assistant .waicb-msg__content {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    margin-right: 20%;
+}
+
+/* ── Delete link ───────────────────────────────────────────────────────────── */
+
+.waicb-delete-link {
+    color: #dc2626 !important;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: inherit;
+    text-decoration: underline;
+}
+
+.waicb-delete-link:hover {
+    color: #991b1b !important;
+}
+
+/* ── Test API result ───────────────────────────────────────────────────────── */
+
+#waicb-test-result.success {
+    color: #16a34a;
+}
+
+#waicb-test-result.error {
+    color: #dc2626;
+}
+
+/* ── Cloud onboarding (settings page) ──────────────────────────────────────── */
+
+.waicb-status {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-radius: 8px;
+    padding: 13px 16px;
+    margin: 14px 0 22px;
+    font-size: 14px;
+}
+.waicb-status__ico {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: #fff;
+    flex: 0 0 auto;
+}
+.waicb-status .waicb-status__right { margin-left: auto; font-size: 13px; }
+.waicb-status--setup { background: #fcf3e6; border: 1px solid #f3d9a8; color: #8a5a00; }
+.waicb-status--setup .waicb-status__ico { background: #dba617; }
+.waicb-status--connected { background: #eef4fb; border: 1px solid #c5d9f1; color: #1d4e89; }
+.waicb-status--connected .waicb-status__ico { background: #2271b1; }
+.waicb-status--live { background: #edfaef; border: 1px solid #b7e4c0; color: #0a6b2e; }
+.waicb-status--live .waicb-status__ico { background: #1aa64b; }
+
+.waicb-card {
+    background: #fff;
+    border: 1px solid #dcdcde;
+    border-radius: 8px;
+    padding: 20px 22px;
+    margin: 0 0 20px;
+}
+.waicb-card h2 { margin: 0 0 2px; padding: 0; border: 0; font-size: 16px; }
+.waicb-sub { color: #646970; margin: 0 0 14px; font-size: 13px; }
+
+.waicb-step { display: flex; gap: 14px; padding: 16px 0; border-top: 1px solid #f0f0f1; }
+.waicb-step:first-of-type { border-top: 0; padding-top: 4px; }
+.waicb-step__mark {
+    flex: 0 0 28px; height: 28px; width: 28px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 13px;
+    background: #eef1f5; color: #646970; border: 1px solid #dcdcde;
+}
+.waicb-step.is-done .waicb-step__mark { background: #1aa64b; border-color: #1aa64b; color: #fff; }
+.waicb-step.is-active .waicb-step__mark { background: #2271b1; border-color: #2271b1; color: #fff; }
+.waicb-step__body { flex: 1; min-width: 0; }
+.waicb-step__body h3 { margin: 0 0 4px; font-size: 14px; }
+.waicb-step__body p { margin: 0 0 10px; color: #646970; font-size: 13px; }
+
+.waicb-gift {
+    display: inline-block;
+    background: #edfaef; color: #0a6b2e; border: 1px solid #b7e4c0;
+    border-radius: 999px; padding: 1px 9px; font-size: 11px; font-weight: 600;
+    margin-left: 6px; vertical-align: middle;
+}
+
+.waicb-tabs { display: flex; gap: 4px; border-bottom: 1px solid #dcdcde; margin: 0 0 18px; flex-wrap: wrap; }
+.waicb-tab {
+    padding: 9px 16px; cursor: pointer;
+    border: 1px solid transparent; border-bottom: 0; border-radius: 6px 6px 0 0;
+    font-size: 14px; color: #646970; background: none; font-family: inherit;
+}
+.waicb-tab.active { background: #fff; border-color: #dcdcde; color: #1d2327; font-weight: 600; margin-bottom: -1px; }
+.waicb-pane { display: none; }
+.waicb-pane.active { display: block; }
+
+.waicb-switch { display: inline-flex; align-items: center; gap: 10px; cursor: pointer; }
+.waicb-switch input { display: none; }
+.waicb-track { width: 42px; height: 24px; background: #c3c4c7; border-radius: 999px; position: relative; transition: .15s; flex: 0 0 auto; }
+.waicb-track::after { content: ""; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; background: #fff; border-radius: 50%; transition: .15s; }
+.waicb-switch input:checked + .waicb-track { background: #1aa64b; }
+.waicb-switch input:checked + .waicb-track::after { left: 21px; }
+
+.waicb-btn-teal { background: #0f766e !important; border-color: #0f766e !important; color: #fff !important; }
+.waicb-btn-teal:hover { background: #115e56 !important; }
+
+#waicb-test-cloud-result.success { color: #16a34a; }
+#waicb-test-cloud-result.error { color: #dc2626; }
+.waicb-hint { color: #646970; font-size: 12px; margin: 6px 0 0; }
