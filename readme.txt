@@ -8,7 +8,7 @@ Requires PHP:      7.4
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
-Add an AI chatbot to any WordPress site, powered by the Chatwick Cloud service — no AI API key to manage.
+Add an AI chatbot to any WordPress site, powered by the Chatwick Cloud service, with no AI API key to manage.
 
 == Description ==
 
@@ -22,8 +22,8 @@ This plugin requires an account on the third-party Chatwick service to function.
 
 = Main Features =
 
-* Powered by the Chatwick Cloud service — no OpenAI/Anthropic key to handle
-* Prepaid credits (1 credit = 1 conversation) — top up from the Chatwick dashboard
+* Powered by the Chatwick Cloud service, with no OpenAI/Anthropic key to handle
+* Prepaid credits (1 credit = 1 conversation), topped up from the Chatwick dashboard
 * **Knowledge base (RAG):** the assistant answers from your own pages, posts and WooCommerce products, with automatic background sync
 * Per-site assistant instructions (persona/tone) sent securely to the service
 * Floating chat bubble with configurable position, color, and title
@@ -33,7 +33,7 @@ This plugin requires an account on the third-party Chatwick service to function.
 * Admin dashboard: settings, conversation list, message logs
 * Rate limiting (20 requests/minute per IP) via WordPress transients
 * Multisite compatible
-* Zero Composer dependencies — native PHP and WordPress Core only
+* Zero Composer dependencies: native PHP and WordPress Core only
 
 == Installation ==
 
@@ -60,7 +60,7 @@ Yes. Use `[waicb_chatbot]` in any text block or shortcode widget.
 
 Yes. The Chatwick account key is encrypted in the database using AES-256-CBC with a key derived from the WordPress `AUTH_KEY` constant.
 
-= My site is behind Cloudflare or a load balancer — how is the rate limit counted? =
+= My site is behind Cloudflare or a load balancer: how is the rate limit counted? =
 
 By default the rate limit uses the direct connection IP (`REMOTE_ADDR`), which cannot be spoofed. If your site sits behind a trusted reverse proxy / CDN, return true on the `waicb_trust_proxy_headers` filter to honor forwarded-for headers instead.
 
@@ -76,7 +76,7 @@ The plugin communicates with the service in the following cases:
 
 * **When a visitor sends a chat message** (endpoint: `https://api.chatwick.app/api/chat.php`). The plugin sends: the visitor's message and recent conversation messages, your assistant instructions, your account key, the site URL, a per-visitor conversation identifier, and a salted **hashed** IP address of the visitor (the raw IP is not sent). This is used to generate the reply and to bill per conversation.
 * **When checking your balance / connection** (endpoint: `https://api.chatwick.app/api/status.php`). The plugin sends your account key and site URL.
-* **When you use the optional Knowledge base feature** (endpoint: `https://api.chatwick.app/api/kb-sync.php`). The plugin sends the content you chose to index — titles, text, excerpts, URLs, and for WooCommerce products their price and attributes — plus your account key and site URL. Content is re-sent automatically when you publish, update or delete it. You control which content types are indexed, and can index none.
+* **When you use the optional Knowledge base feature** (endpoint: `https://api.chatwick.app/api/kb-sync.php`). The plugin sends the content you chose to index (titles, text, excerpts, URLs, and for WooCommerce products their price and attributes), plus your account key and site URL. Content is re-sent automatically when you publish, update or delete it. You control which content types are indexed, and can index none.
 
 The Chatwick service in turn relies on AI providers (OpenAI, Anthropic) and other sub-processors to deliver the service. What data is stored, for how long, and the full list of sub-processors are described in the service's policies.
 
@@ -95,8 +95,8 @@ By installing this plugin and connecting your account key, you agree to the Chat
 == Changelog ==
 
 = 1.7.0 =
-* New: Knowledge base (RAG) — the assistant now answers from your own site content (pages, posts, WooCommerce products and any public custom post type). A new "Base de connaissances" screen lets you choose which content types to index and sync them to the Chatwick service.
-* New: automatic sync — published, updated, unpublished and deleted content is kept in sync in the background (no manual action needed after the first sync). Scheduled posts are indexed when they go live; removed content is dropped from the knowledge base.
+* New: Knowledge base (RAG). The assistant now answers from your own site content (pages, posts, WooCommerce products and any public custom post type). A new "Base de connaissances" screen lets you choose which content types to index and sync them to the Chatwick service.
+* New: automatic sync. Published, updated, unpublished and deleted content is kept in sync in the background (no manual action needed after the first sync). Scheduled posts are indexed when they go live; removed content is dropped from the knowledge base.
 * Note: requires the Chatwick service to be updated (knowledge base storage + retrieval, and an OpenAI key for embeddings) and RAG enabled for your account.
 
 = 1.6.2 =
@@ -126,23 +126,23 @@ By installing this plugin and connecting your account key, you agree to the Chat
 * All previous widget settings are kept (bubble icon, title, welcome message, color, position, cookie, quick replies, display rules).
 
 = 1.3.1 =
-* New: contextual Chatwick links in the settings — "Créer un compte" when no key is set, "Gérer mes crédits / Recharger" once connected (opens the Chatwick dashboard).
+* New: contextual Chatwick links in the settings: "Créer un compte" when no key is set, "Gérer mes crédits / Recharger" once connected (opens the Chatwick dashboard).
 
 = 1.3.0 =
-* Change: the plugin is now powered exclusively by the Chatwick Cloud service. The OpenAI and Claude "bring-your-own-key" providers have been removed — you only paste a Chatwick account key (no AI API key to manage).
+* Change: the plugin is now powered exclusively by the Chatwick Cloud service. The OpenAI and Claude "bring-your-own-key" providers have been removed. You only paste a Chatwick account key (no AI API key to manage).
 * New: per-site "Assistant instructions" field (persona/tone) sent to the service with each message.
 * Simplified settings: provider selector, AI keys, model/temperature/mode/Assistants and token settings removed.
 
 = 1.2.0 =
-* New: "Cloud" provider — connect the chatbot to a prepaid credits SaaS (e.g. Chatwick) instead of your own OpenAI/Anthropic key. The site sends only an account key; the SaaS holds the AI keys, checks credits, and bills 1 credit per message.
+* New: "Cloud" provider. Connect the chatbot to a prepaid credits SaaS (e.g. Chatwick) instead of your own OpenAI/Anthropic key. The site sends only an account key; the SaaS holds the AI keys, checks credits, and bills 1 credit per message.
 * New: settings section for the Cloud provider (proxy URL + account key) with a connection test that validates the key without consuming a credit.
 
 = 1.1.2 =
-* Fix: database tables are now self-healing — they are (re)created automatically on update if missing, instead of only on activation. Fixes empty Conversations/Logs pages and lost chat history after an in-place update.
+* Fix: database tables are now self-healing. They are (re)created automatically on update if missing, instead of only on activation. Fixes empty Conversations/Logs pages and lost chat history after an in-place update.
 * Fix: "Trying to access array offset on null" warning on the Logs page when no logs exist yet.
 
 = 1.1.1 =
-* Fix: "Nonce invalide" error when sending a message while logged in — the chat request now authenticates the cookie session via the WordPress REST nonce (X-WP-Nonce).
+* Fix: "Nonce invalide" error when sending a message while logged in. The chat request now authenticates the cookie session via the WordPress REST nonce (X-WP-Nonce).
 * UX: the settings page now shows only the active provider's options (OpenAI or Claude), and the OpenAI engine reveals either Chat Completion or Assistants API fields. Shared generation settings (system prompt, max tokens, history) are grouped separately.
 
 = 1.1.0 =
