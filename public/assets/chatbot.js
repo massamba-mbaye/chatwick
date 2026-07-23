@@ -59,7 +59,7 @@
     var TRANSCRIPT_KEY = 'waicb_transcript';
     function loadTranscript() {
         try {
-            var raw = JSON.parse( window.localStorage.getItem( TRANSCRIPT_KEY ) || 'null' );
+            var raw = JSON.parse( lsGet( TRANSCRIPT_KEY ) || 'null' );
             if ( raw && raw.sk === sessionKey && Array.isArray( raw.msgs ) ) {
                 return raw.msgs;
             }
@@ -70,9 +70,7 @@
         var msgs = loadTranscript();
         msgs.push( { role: role, content: content } );
         if ( msgs.length > 60 ) { msgs = msgs.slice( -60 ); } // borne la taille
-        try {
-            window.localStorage.setItem( TRANSCRIPT_KEY, JSON.stringify( { sk: sessionKey, msgs: msgs } ) );
-        } catch ( e ) {}
+        lsSet( TRANSCRIPT_KEY, JSON.stringify( { sk: sessionKey, msgs: msgs } ) ); // lsSet gère le try/catch
     }
 
     // ── Time formatter ───────────────────────────────────────────────────────
