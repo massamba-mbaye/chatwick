@@ -3,7 +3,7 @@ Contributors:      massambambaye
 Tags:              chatbot, ai, assistant, chatwick, support
 Requires at least: 6.0
 Tested up to:      7.0
-Stable tag:        1.7.0
+Stable tag:        1.8.0
 Requires PHP:      7.4
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -87,12 +87,18 @@ By installing this plugin and connecting your account key, you agree to the Chat
 
 == Screenshots ==
 
-1. Frontend chatbot widget (bubble + panel)
-2. Settings page (admin dashboard)
-3. Conversation list
-4. API logs (model + token usage)
+1. The assistant answering a real visitor question on a live site, in a floating bubble matched to the site's colors.
+2. Knowledge base: choose which content types to index, sync them to Chatwick, and let auto sync keep everything up to date.
+3. Guided setup: create your Chatwick account, paste your account key, test the connection, then switch the chatbot on.
+4. Assistant tab: define your bot's persona and its welcome message. These instructions are sent with every message.
+5. Appearance tab: custom bubble icon, widget title, main color and screen position.
+6. Advanced tab: clickable question suggestions shown at the start of a chat, and conversation cookie duration.
 
 == Changelog ==
+
+= 1.8.0 =
+* New: the conversation now stays visible when the visitor switches tabs or reloads the page, until the session expires (the transcript is restored on load).
+* New: "Bubble effect" appearance setting. Make the floating bubble more visible with a soft shadow, a colored glow, or a glow with pulse. The effect uses your main color automatically. Respects reduced-motion preferences.
 
 = 1.7.0 =
 * New: Knowledge base (RAG). The assistant now answers from your own site content (pages, posts, WooCommerce products and any public custom post type). A new "Base de connaissances" screen lets you choose which content types to index and sync them to the Chatwick service.

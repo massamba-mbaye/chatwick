@@ -15,13 +15,25 @@ $title             = get_option( 'waicb_widget_title', __( 'Assistant IA', 'chat
 $waicb_color       = get_option( 'waicb_widget_color', '#C49A2E' );
 $waicb_position    = get_option( 'waicb_widget_position', 'bottom-right' );
 $waicb_bubble_icon = get_option( 'waicb_bubble_icon', '' );
+$waicb_effect      = get_option( 'waicb_bubble_effect', 'glow' );
+
+// Couleur principale en composantes R,G,B : permet de dériver le halo/l'ombre
+// (rgba(var(--waicb-color-rgb), α)) tout en gardant la couleur exacte du client.
+$waicb_hex = ltrim( (string) $waicb_color, '#' );
+if ( 3 === strlen( $waicb_hex ) ) {
+	$waicb_hex = $waicb_hex[0] . $waicb_hex[0] . $waicb_hex[1] . $waicb_hex[1] . $waicb_hex[2] . $waicb_hex[2];
+}
+$waicb_rgb = ( 6 === strlen( $waicb_hex ) && ctype_xdigit( $waicb_hex ) )
+	? hexdec( substr( $waicb_hex, 0, 2 ) ) . ',' . hexdec( substr( $waicb_hex, 2, 2 ) ) . ',' . hexdec( substr( $waicb_hex, 4, 2 ) )
+	: '196,154,46';
 ?>
 
 <?php if ( 'bubble' === $waicb_mode ) : ?>
 <!-- Floating bubble -->
 <button id="waicb-bubble"
         class="waicb-bubble waicb-pos-<?php echo esc_attr( $waicb_position ); ?>"
-        style="--waicb-color:<?php echo esc_attr( $waicb_color ); ?>"
+        data-effect="<?php echo esc_attr( $waicb_effect ); ?>"
+        style="--waicb-color:<?php echo esc_attr( $waicb_color ); ?>;--waicb-color-rgb:<?php echo esc_attr( $waicb_rgb ); ?>"
         aria-label="<?php
 		/* translators: %s: chatbot widget title */
 		echo esc_attr( sprintf( __( 'Open %s', 'chatwick' ), $title ) );

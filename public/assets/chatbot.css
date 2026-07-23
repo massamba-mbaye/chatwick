@@ -45,6 +45,38 @@
 .waicb-pos-bottom-right.waicb-bubble { right: 24px; }
 .waicb-pos-bottom-left.waicb-bubble  { left:  24px; }
 
+/* ── Effets de visibilité de la bulle (dérivés de la couleur principale) ─────── */
+/* Repli 196,154,46 = couleur par défaut, si --waicb-color-rgb absent. */
+.waicb-bubble[data-effect="soft"] {
+    box-shadow: 0 14px 34px -8px rgba(var(--waicb-color-rgb, 196,154,46), .55);
+}
+.waicb-bubble[data-effect="glow"] {
+    box-shadow: 0 10px 26px -6px rgba(0,0,0,.28), 0 0 22px 3px rgba(var(--waicb-color-rgb, 196,154,46), .55);
+}
+.waicb-bubble[data-effect="glow"]:hover,
+.waicb-bubble[data-effect="glow"]:focus-visible {
+    box-shadow: 0 12px 30px -6px rgba(0,0,0,.30), 0 0 34px 7px rgba(var(--waicb-color-rgb, 196,154,46), .80);
+}
+.waicb-bubble[data-effect="pulse"] {
+    box-shadow: 0 10px 26px -6px rgba(0,0,0,.28), 0 0 20px 2px rgba(var(--waicb-color-rgb, 196,154,46), .50);
+}
+.waicb-bubble[data-effect="pulse"]::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid rgba(var(--waicb-color-rgb, 196,154,46), .85);
+    animation: waicb-ring 2s ease-out infinite;
+    pointer-events: none;
+}
+@keyframes waicb-ring {
+    0%   { transform: scale(1);   opacity: .7; }
+    100% { transform: scale(1.7); opacity: 0;  }
+}
+@media (prefers-reduced-motion: reduce) {
+    .waicb-bubble[data-effect="pulse"]::after { animation: none; }
+}
+
 /* ── Panel ──────────────────────────────────────────────────────────────────── */
 
 .waicb-panel {

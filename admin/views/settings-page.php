@@ -11,6 +11,7 @@ $waicb_has_cloud_key   = '' !== get_option( 'waicb_cloud_key', '' );
 $waicb_instructions    = get_option( 'waicb_instructions', '' );
 $waicb_bubble_icon     = get_option( 'waicb_bubble_icon', '' );
 $waicb_widget_position = get_option( 'waicb_widget_position', 'bottom-right' );
+$waicb_bubble_effect   = get_option( 'waicb_bubble_effect', 'glow' );
 $waicb_widget_title    = get_option( 'waicb_widget_title', 'Assistant IA' );
 $waicb_widget_color    = get_option( 'waicb_widget_color', '#C49A2E' );
 $waicb_welcome_message = get_option( 'waicb_welcome_message', __( 'Bonjour ! Comment puis-je vous aider ?', 'chatwick' ) );
@@ -203,6 +204,18 @@ $waicb_step_class = function ( $done, $n ) use ( $waicb_active ) {
 								<option value="bottom-right" <?php selected( $waicb_widget_position, 'bottom-right' ); ?>><?php esc_html_e( 'Bas droite', 'chatwick' ); ?></option>
 								<option value="bottom-left" <?php selected( $waicb_widget_position, 'bottom-left' ); ?>><?php esc_html_e( 'Bas gauche', 'chatwick' ); ?></option>
 							</select>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row"><label for="waicb_bubble_effect"><?php esc_html_e( 'Effet de la bulle', 'chatwick' ); ?></label></th>
+						<td>
+							<select id="waicb_bubble_effect" name="waicb_bubble_effect">
+								<option value="none" <?php selected( $waicb_bubble_effect, 'none' ); ?>><?php esc_html_e( 'Aucun', 'chatwick' ); ?></option>
+								<option value="soft" <?php selected( $waicb_bubble_effect, 'soft' ); ?>><?php esc_html_e( 'Ombre douce', 'chatwick' ); ?></option>
+								<option value="glow" <?php selected( $waicb_bubble_effect, 'glow' ); ?>><?php esc_html_e( 'Halo lumineux', 'chatwick' ); ?></option>
+								<option value="pulse" <?php selected( $waicb_bubble_effect, 'pulse' ); ?>><?php esc_html_e( 'Halo + pulsation', 'chatwick' ); ?></option>
+							</select>
+							<p class="description"><?php esc_html_e( 'Rend la bulle plus visible sur le site. Le halo reprend votre couleur principale.', 'chatwick' ); ?></p>
 						</td>
 					</tr>
 				</table>

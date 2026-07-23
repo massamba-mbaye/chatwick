@@ -52,6 +52,29 @@
     }
     persistSession( sessionKey );
 
+    // ── Transcription (persistance de la conversation affichée) ──────────────
+    // Les messages sont conservés dans le localStorage, rattachés à la session
+    // courante : la conversation reste visible en changeant d'onglet ou en
+    // rechargeant, jusqu'à ce que la session change (nouvelle identité/expiration).
+    var TRANSCRIPT_KEY = 'waicb_transcript';
+    function loadTranscript() {
+        try {
+            var raw = JSON.parse( window.localStorage.getItem( TRANSCRIPT_KEY ) || 'null' );
+            if ( raw && raw.sk === sessionKey && Array.isArray( raw.msgs ) ) {
+                return raw.msgs;
+            }
+        } catch ( e ) {}
+        return [];
+    }
+    function recordMessage( role, content ) {
+        var msgs = loadTranscript();
+        msgs.push( { role: role, content: content } );
+        if ( msgs.length > 60 ) { msgs = msgs.slice( -60 ); } // borne la taille
+        try {
+            window.localStorage.setItem( TRANSCRIPT_KEY, JSON.stringify( { sk: sessionKey, msgs: msgs } ) );
+        } catch ( e ) {}
+    }
+
     // ── Time formatter ───────────────────────────────────────────────────────
     function formatTime( date ) {
         var h = date.getHours().toString().padStart( 2, '0' );
@@ -256,8 +279,19 @@
         closeBtn.addEventListener( 'click', closePanel );
     }
 
-    // If shortcode mode, show welcome immediately.
-    if ( panel.dataset.mode === 'shortcode' && waicbConfig.welcomeMessage ) {
+    // Restaure la conversation précédente (même session) : elle reste visible en
+    // changeant d'onglet et au rechargement, jusqu'à expiration de la session.
+    (function restoreTranscript() {
+        var prev = loadTranscript();
+        if ( ! prev.length ) { return; }
+        prev.forEach( function ( m ) { appendMessage( m.role, m.content, false ); } );
+        welcomeShown = true;        // pas de re-bienvenue par-dessus une conversation
+        conversationStarted = true; // pas de re-suggestions
+        scrollToBottom();
+    })();
+
+    // If shortcode mode, show welcome immediately (sauf conversation déjà en cours).
+    if ( panel.dataset.mode === 'shortcode' && waicbConfig.welcomeMessage && ! welcomeShown ) {
         welcomeShown = true;
         appendMessage( 'assistant', waicbConfig.welcomeMessage );
         renderQuickReplies();
@@ -285,7 +319,7 @@
     }
 
     // ── Append a message bubble ──────────────────────────────────────────────
-    function appendMessage( role, content ) {
+    function appendMessage( role, content, record ) {
         var wrapper = document.createElement( 'div' );
         wrapper.className = 'waicb-msg waicb-msg--' + role;
 
@@ -324,6 +358,11 @@
         wrapper.appendChild( body );
 
         messages.appendChild( wrapper );
+
+        // Persiste les vrais échanges (pas le message de bienvenue ni les erreurs).
+        if ( record ) {
+            recordMessage( role, content );
+        }
 
         // Scroll only if near bottom.
         if ( isNearBottom() ) {
@@ -422,7 +461,7 @@
             hideQuickReplies();
         }
 
-        lastUserMsgEl = appendMessage( 'user', text );
+        lastUserMsgEl = appendMessage( 'user', text, true );
         showTyping();
 
         fetch( waicbConfig.restUrl, {
@@ -457,7 +496,7 @@
             }
 
             if ( data.success && data.data && data.data.reply ) {
-                appendMessage( 'assistant', data.data.reply );
+                appendMessage( 'assistant', data.data.reply, true );
                 if ( data.data.session_key ) {
                     sessionKey = data.data.session_key;
                     persistSession( sessionKey );

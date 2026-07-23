@@ -2,21 +2,21 @@
 # This file is distributed under the GPL v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Chatwick 1.7.0\n"
+"Project-Id-Version: Chatwick 1.8.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/chatwick\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-07-08T11:17:12+00:00\n"
+"POT-Creation-Date: 2026-07-23T13:28:44+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: chatwick\n"
 
 #. Plugin Name of the plugin
 #: chatwick.php
-#: admin/views/settings-page.php:52
+#: admin/views/settings-page.php:53
 #: includes/class-admin-settings.php:36
 #: includes/class-admin-settings.php:37
 msgid "Chatwick"
@@ -73,7 +73,7 @@ msgid "Utilisateur"
 msgstr ""
 
 #: admin/views/conversation-detail.php:53
-#: admin/views/settings-page.php:156
+#: admin/views/settings-page.php:157
 msgid "Assistant"
 msgstr ""
 
@@ -126,13 +126,13 @@ msgid "Voir"
 msgstr ""
 
 #: admin/views/conversations-page.php:78
-#: admin/views/settings-page.php:187
+#: admin/views/settings-page.php:188
 msgid "Supprimer"
 msgstr ""
 
 #: admin/views/kb-page.php:16
-#: includes/class-admin-kb.php:38
-#: includes/class-admin-kb.php:39
+#: includes/class-admin-kb.php:42
+#: includes/class-admin-kb.php:43
 msgid "Base de connaissances"
 msgstr ""
 
@@ -157,7 +157,7 @@ msgid "Enregistrer la sélection"
 msgstr ""
 
 #: admin/views/kb-page.php:51
-#: admin/views/kb-page.php:60
+#: admin/views/kb-page.php:59
 msgid "Synchroniser maintenant"
 msgstr ""
 
@@ -165,26 +165,26 @@ msgstr ""
 msgid "Parcourt le contenu sélectionné par lots et l'envoie à Chatwick. Vous pouvez relancer à tout moment : seul le contenu modifié est réindexé."
 msgstr ""
 
-#: admin/views/kb-page.php:75
+#: admin/views/kb-page.php:74
 msgid "Synchronisation automatique"
 msgstr ""
 
-#: admin/views/kb-page.php:77
+#: admin/views/kb-page.php:76
 msgid "Activée : dès qu'un contenu est publié, modifié, dépublié ou supprimé, la base est mise à jour automatiquement (en tâche de fond). La synchronisation manuelle ci-dessus ne sert donc qu'à la première indexation ou après un changement de sélection."
 msgstr ""
 
 #. translators: %d = nombre de contenus en attente.
-#: admin/views/kb-page.php:85
+#: admin/views/kb-page.php:84
 msgid "%d contenu en attente de synchronisation automatique."
 msgid_plural "%d contenus en attente de synchronisation automatique."
 msgstr[0] ""
 msgstr[1] ""
 
-#: admin/views/kb-page.php:87
+#: admin/views/kb-page.php:86
 msgid "(traité en tâche de fond dans la minute qui suit)"
 msgstr ""
 
-#: admin/views/kb-page.php:89
+#: admin/views/kb-page.php:88
 msgid "Aucun contenu en attente : la base est à jour."
 msgstr ""
 
@@ -222,234 +222,258 @@ msgstr ""
 msgid "Totaux"
 msgstr ""
 
-#: admin/views/settings-page.php:16
-#: public/class-chatbot-widget.php:91
+#: admin/views/settings-page.php:17
+#: public/class-chatbot-widget.php:89
 msgid "Bonjour ! Comment puis-je vous aider ?"
 msgstr ""
 
-#: admin/views/settings-page.php:55
+#: admin/views/settings-page.php:56
 msgid "Réglages enregistrés."
 msgstr ""
 
-#: admin/views/settings-page.php:58
+#: admin/views/settings-page.php:59
 msgid "Toutes les conversations ont été supprimées."
 msgstr ""
 
-#: admin/views/settings-page.php:66
+#: admin/views/settings-page.php:67
 msgid "Chatbot en ligne."
 msgstr ""
 
-#: admin/views/settings-page.php:66
+#: admin/views/settings-page.php:67
 msgid "Votre assistant répond à vos visiteurs."
 msgstr ""
 
-#: admin/views/settings-page.php:70
+#: admin/views/settings-page.php:71
 #: includes/class-admin-settings.php:83
 msgid "Connecté à Chatwick."
 msgstr ""
 
-#: admin/views/settings-page.php:70
+#: admin/views/settings-page.php:71
 #: includes/class-admin-settings.php:84
 msgid "Activez le chatbot (étape 4) pour l'afficher sur le site."
 msgstr ""
 
-#: admin/views/settings-page.php:74
+#: admin/views/settings-page.php:75
 msgid "Configuration requise."
 msgstr ""
 
-#: admin/views/settings-page.php:74
+#: admin/views/settings-page.php:75
 msgid "Connectez votre compte Chatwick pour activer le chatbot."
 msgstr ""
 
-#: admin/views/settings-page.php:82
+#: admin/views/settings-page.php:83
 msgid "Crédits :"
 msgstr ""
 
-#: admin/views/settings-page.php:84
+#: admin/views/settings-page.php:85
 msgid "Recharger"
 msgstr ""
 
-#: admin/views/settings-page.php:95
+#: admin/views/settings-page.php:96
 msgid "Mise en route"
 msgstr ""
 
-#: admin/views/settings-page.php:96
+#: admin/views/settings-page.php:97
 msgid "Quatre étapes pour mettre votre assistant en ligne."
 msgstr ""
 
-#: admin/views/settings-page.php:102
+#: admin/views/settings-page.php:103
 msgid "Créez votre compte Chatwick"
 msgstr ""
 
-#: admin/views/settings-page.php:102
+#: admin/views/settings-page.php:103
 msgid "25 conversations offertes"
 msgstr ""
 
-#: admin/views/settings-page.php:103
+#: admin/views/settings-page.php:104
 msgid "Gratuit, sans carte bancaire. Vous obtiendrez une clé de compte à coller à l'étape 2."
 msgstr ""
 
-#: admin/views/settings-page.php:104
+#: admin/views/settings-page.php:105
 msgid "Créer un compte (gratuit)"
 msgstr ""
 
-#: admin/views/settings-page.php:112
+#: admin/views/settings-page.php:113
 msgid "Connectez votre clé"
 msgstr ""
 
-#: admin/views/settings-page.php:113
+#: admin/views/settings-page.php:114
 msgid "Collez la clé de compte récupérée sur Chatwick, puis testez la connexion."
 msgstr ""
 
-#: admin/views/settings-page.php:118
+#: admin/views/settings-page.php:119
 msgid "Tester la connexion"
 msgstr ""
 
-#: admin/views/settings-page.php:121
+#: admin/views/settings-page.php:122
 msgid "Gérer mes crédits / Recharger"
 msgstr ""
 
-#: admin/views/settings-page.php:124
+#: admin/views/settings-page.php:125
 msgid "La clé reste chiffrée. Aucune clé OpenAI ou Anthropic à fournir. Laissez vide pour conserver la valeur actuelle."
 msgstr ""
 
-#: admin/views/settings-page.php:132
+#: admin/views/settings-page.php:133
 msgid "Personnalisez l'assistant"
 msgstr ""
 
-#: admin/views/settings-page.php:133
+#: admin/views/settings-page.php:134
 msgid "Décrivez le rôle et le ton de votre bot. Modifiable à tout moment dans l'onglet « Assistant »."
 msgstr ""
 
-#: admin/views/settings-page.php:134
+#: admin/views/settings-page.php:135
 msgid "Personnaliser le ton →"
 msgstr ""
 
-#: admin/views/settings-page.php:142
+#: admin/views/settings-page.php:143
 msgid "Activez le chatbot"
 msgstr ""
 
-#: admin/views/settings-page.php:143
+#: admin/views/settings-page.php:144
 msgid "Affichez la bulle de chat sur votre site. Choisissez les pages dans l'onglet « Affichage »."
 msgstr ""
 
-#: admin/views/settings-page.php:147
+#: admin/views/settings-page.php:148
 msgid "Afficher le chatbot sur le site"
 msgstr ""
 
-#: admin/views/settings-page.php:157
+#: admin/views/settings-page.php:158
 msgid "Apparence"
 msgstr ""
 
-#: admin/views/settings-page.php:158
+#: admin/views/settings-page.php:159
 msgid "Affichage"
 msgstr ""
 
-#: admin/views/settings-page.php:159
+#: admin/views/settings-page.php:160
 msgid "Avancé"
 msgstr ""
 
-#: admin/views/settings-page.php:165
+#: admin/views/settings-page.php:166
 msgid "Instructions de l'assistant (persona)"
 msgstr ""
 
-#: admin/views/settings-page.php:167
+#: admin/views/settings-page.php:168
 msgid "Ex. : Tu es l'assistant du site Exemple. Réponds en français, de façon concise et chaleureuse, à propos de nos services."
 msgstr ""
 
-#: admin/views/settings-page.php:168
+#: admin/views/settings-page.php:169
 msgid "transmis à Chatwick à chaque message."
 msgstr ""
 
-#: admin/views/settings-page.php:171
+#: admin/views/settings-page.php:172
 msgid "Message de bienvenue"
 msgstr ""
 
-#: admin/views/settings-page.php:180
+#: admin/views/settings-page.php:181
 msgid "Icône de la bulle"
 msgstr ""
 
-#: admin/views/settings-page.php:186
+#: admin/views/settings-page.php:187
 msgid "Choisir une image"
 msgstr ""
 
-#: admin/views/settings-page.php:188
+#: admin/views/settings-page.php:189
 msgid "Remplace l'icône par défaut dans la bulle flottante. Taille recommandée : 56×56 px."
 msgstr ""
 
-#: admin/views/settings-page.php:192
+#: admin/views/settings-page.php:193
 msgid "Titre du widget"
 msgstr ""
 
-#: admin/views/settings-page.php:196
+#: admin/views/settings-page.php:197
 msgid "Couleur principale"
 msgstr ""
 
-#: admin/views/settings-page.php:200
+#: admin/views/settings-page.php:201
 msgid "Position"
 msgstr ""
 
-#: admin/views/settings-page.php:203
+#: admin/views/settings-page.php:204
 msgid "Bas droite"
 msgstr ""
 
-#: admin/views/settings-page.php:204
+#: admin/views/settings-page.php:205
 msgid "Bas gauche"
 msgstr ""
 
-#: admin/views/settings-page.php:215
-msgid "Où afficher le chatbot"
+#: admin/views/settings-page.php:210
+msgid "Effet de la bulle"
 msgstr ""
 
-#: admin/views/settings-page.php:217
-msgid "Sur toutes les pages"
+#: admin/views/settings-page.php:213
+msgid "Aucun"
+msgstr ""
+
+#: admin/views/settings-page.php:214
+msgid "Ombre douce"
+msgstr ""
+
+#: admin/views/settings-page.php:215
+msgid "Halo lumineux"
+msgstr ""
+
+#: admin/views/settings-page.php:216
+msgid "Halo + pulsation"
 msgstr ""
 
 #: admin/views/settings-page.php:218
+msgid "Rend la bulle plus visible sur le site. Le halo reprend votre couleur principale."
+msgstr ""
+
+#: admin/views/settings-page.php:228
+msgid "Où afficher le chatbot"
+msgstr ""
+
+#: admin/views/settings-page.php:230
+msgid "Sur toutes les pages"
+msgstr ""
+
+#: admin/views/settings-page.php:231
 msgid "Uniquement sur les pages sélectionnées"
 msgstr ""
 
-#: admin/views/settings-page.php:219
+#: admin/views/settings-page.php:232
 msgid "Sur toutes les pages sauf les sélectionnées"
 msgstr ""
 
-#: admin/views/settings-page.php:223
+#: admin/views/settings-page.php:236
 msgid "Pages"
 msgstr ""
 
-#: admin/views/settings-page.php:234
+#: admin/views/settings-page.php:247
 msgid "Aucune page trouvée."
 msgstr ""
 
-#: admin/views/settings-page.php:237
-msgid "Le shortcode [ai_chatbot] fonctionne toujours indépendamment de cette règle."
+#: admin/views/settings-page.php:250
+msgid "Le shortcode [waicb_chatbot] fonctionne toujours indépendamment de cette règle."
 msgstr ""
 
-#: admin/views/settings-page.php:247
+#: admin/views/settings-page.php:260
 msgid "Suggestions de questions"
 msgstr ""
 
-#: admin/views/settings-page.php:250
+#: admin/views/settings-page.php:263
 msgid "Une suggestion par ligne. Affichées comme boutons cliquables au démarrage du chat."
 msgstr ""
 
-#: admin/views/settings-page.php:254
+#: admin/views/settings-page.php:267
 msgid "Durée du cookie (jours)"
 msgstr ""
 
-#: admin/views/settings-page.php:261
+#: admin/views/settings-page.php:274
 msgid "Enregistrer les réglages"
 msgstr ""
 
-#: admin/views/settings-page.php:266
+#: admin/views/settings-page.php:279
 msgid "Zone de danger"
 msgstr ""
 
-#: admin/views/settings-page.php:267
+#: admin/views/settings-page.php:280
 msgid "Cette action supprime définitivement toutes les conversations et logs."
 msgstr ""
 
-#: admin/views/settings-page.php:271
+#: admin/views/settings-page.php:284
 msgid "Vider toutes les conversations"
 msgstr ""
 
@@ -462,10 +486,10 @@ msgid "Chatwick requires WordPress 6.0 or higher."
 msgstr ""
 
 #: includes/class-admin-conversations.php:71
-#: includes/class-admin-kb.php:65
-#: includes/class-admin-kb.php:86
+#: includes/class-admin-kb.php:96
+#: includes/class-admin-kb.php:117
 #: includes/class-admin-settings.php:111
-#: includes/class-admin-settings.php:177
+#: includes/class-admin-settings.php:183
 #: includes/class-rest-api.php:73
 #: includes/class-rest-api.php:161
 #: includes/class-rest-api.php:221
@@ -533,50 +557,50 @@ msgstr ""
 msgid "Le message dépasse la limite de %d caractères."
 msgstr ""
 
-#: public/class-chatbot-widget.php:90
+#: public/class-chatbot-widget.php:88
 #: public/views/chatbot-widget.php:14
 msgid "Assistant IA"
 msgstr ""
 
-#: public/class-chatbot-widget.php:96
-#: public/views/chatbot-widget.php:104
+#: public/class-chatbot-widget.php:94
+#: public/views/chatbot-widget.php:116
 msgid "Écrivez votre message…"
 msgstr ""
 
-#: public/class-chatbot-widget.php:97
-#: public/views/chatbot-widget.php:112
+#: public/class-chatbot-widget.php:95
+#: public/views/chatbot-widget.php:124
 msgid "Envoyer"
 msgstr ""
 
-#: public/class-chatbot-widget.php:98
+#: public/class-chatbot-widget.php:96
 msgid "Une erreur est survenue. Veuillez réessayer."
 msgstr ""
 
 #. translators: %s: chatbot widget title
-#: public/views/chatbot-widget.php:27
+#: public/views/chatbot-widget.php:39
 msgid "Open %s"
 msgstr ""
 
-#: public/views/chatbot-widget.php:71
+#: public/views/chatbot-widget.php:83
 msgid "En ligne"
 msgstr ""
 
-#: public/views/chatbot-widget.php:76
+#: public/views/chatbot-widget.php:88
 msgid "Fermer"
 msgstr ""
 
-#: public/views/chatbot-widget.php:87
+#: public/views/chatbot-widget.php:99
 msgid "Défiler vers le bas"
 msgstr ""
 
-#: public/views/chatbot-widget.php:94
+#: public/views/chatbot-widget.php:106
 msgid "Suggestions"
 msgstr ""
 
-#: public/views/chatbot-widget.php:105
+#: public/views/chatbot-widget.php:117
 msgid "Message"
 msgstr ""
 
-#: public/views/chatbot-widget.php:108
+#: public/views/chatbot-widget.php:120
 msgid "Effacer"
 msgstr ""

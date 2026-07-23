@@ -139,6 +139,12 @@ class WAICB_Admin_Settings {
 		$color = isset( $_POST['waicb_widget_color'] ) ? sanitize_hex_color( wp_unslash( $_POST['waicb_widget_color'] ) ) : '#C49A2E';
 		update_option( 'waicb_widget_color', $color ? $color : '#C49A2E' );
 
+		$bubble_effect = isset( $_POST['waicb_bubble_effect'] ) ? sanitize_key( wp_unslash( $_POST['waicb_bubble_effect'] ) ) : 'glow';
+		if ( ! in_array( $bubble_effect, array( 'none', 'soft', 'glow', 'pulse' ), true ) ) {
+			$bubble_effect = 'glow';
+		}
+		update_option( 'waicb_bubble_effect', $bubble_effect );
+
 		$cookie_days = isset( $_POST['waicb_cookie_days'] ) ? (int) $_POST['waicb_cookie_days'] : 90;
 		$cookie_days = max( 1, min( 365, $cookie_days ) );
 		update_option( 'waicb_cookie_days', $cookie_days );
