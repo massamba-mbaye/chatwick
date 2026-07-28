@@ -3,7 +3,7 @@ Contributors:      massambambaye
 Tags:              chatbot, ai, assistant, chatwick, support
 Requires at least: 6.0
 Tested up to:      7.0
-Stable tag:        1.9.0
+Stable tag:        1.9.1
 Requires PHP:      7.4
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -96,6 +96,9 @@ By installing this plugin and connecting your account key, you agree to the Chat
 
 == Changelog ==
 
+= 1.9.1 =
+* Improve: full internationalization of the admin interface. The knowledge base sync screen and the media picker labels now go through the translation system, and the translation template (.pot) has been refreshed.
+
 = 1.9.0 =
 * New: the Conversations screen now shows a summary bar with your remaining credits, the site's monthly quota (used / limit and percentage) and the estimated balance autonomy in days.
 * New: the settings screen now shows your site's monthly quota (used / limit and percentage, or "unlimited") next to your credit balance.
@@ -172,6 +175,9 @@ By installing this plugin and connecting your account key, you agree to the Chat
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.9.1 =
+The admin interface is now fully translatable and the translation template has been refreshed. No functional change.
 
 = 1.9.0 =
 The settings screen now shows your site's monthly quota next to your balance, and the chat always scrolls to the latest message. The obsolete API Logs screen is removed and its unused local table is dropped on update.

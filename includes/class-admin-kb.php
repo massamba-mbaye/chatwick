@@ -70,6 +70,24 @@ class WAICB_Admin_KB {
 			array(
 				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
 				'nonce'   => wp_create_nonce( 'waicb_admin_nonce' ),
+				'i18n'    => array(
+					'error'        => __( 'Erreur.', 'chatwick' ),
+					/* translators: %s: error message returned by the server. */
+					'errorWith'    => __( 'Erreur : %s', 'chatwick' ),
+					'networkError' => __( 'Erreur réseau.', 'chatwick' ),
+					'starting'     => __( 'Démarrage…', 'chatwick' ),
+					'done'         => __( 'Terminé', 'chatwick' ),
+					/* translators: %1$d: contenus traités, %2$d: total. */
+					'progress'     => __( '%1$d / %2$d contenus', 'chatwick' ),
+					/* translators: %d: nombre de passages indexés. */
+					'chunks'       => __( '%d passages indexés', 'chatwick' ),
+					'resync'       => __( 'Synchroniser à nouveau', 'chatwick' ),
+					'summaryDone'  => __( 'Terminé.', 'chatwick' ),
+					'labelIndexed'   => __( 'Indexés', 'chatwick' ),
+					'labelUnchanged' => __( 'Inchangés', 'chatwick' ),
+					'labelSkipped'   => __( 'Ignorés', 'chatwick' ),
+					'labelErrors'    => __( 'Erreurs', 'chatwick' ),
+				),
 			)
 		);
 	}

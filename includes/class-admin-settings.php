@@ -84,6 +84,12 @@ class WAICB_Admin_Settings {
 					'enableHint'   => __( 'Activez le chatbot (étape 4) pour l\'afficher sur le site.', 'chatwick' ),
 					'creditsSuffix'      => __( 'conversations', 'chatwick' ),
 					'creditsUnavailable' => __( 'indisponible', 'chatwick' ),
+					'quotaPrefix'        => __( 'Quota du site :', 'chatwick' ),
+					'quotaUnlimited'     => __( 'sans plafond', 'chatwick' ),
+					/* translators: %s: number of days of estimated balance autonomy. */
+					'autonomyLabel'      => __( 'Autonomie : ~%s j', 'chatwick' ),
+					'useImage'           => __( 'Utiliser cette image', 'chatwick' ),
+					'chooseIcon'         => __( 'Choisir l\'icône de la bulle', 'chatwick' ),
 				),
 			)
 		);

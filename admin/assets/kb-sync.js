@@ -9,6 +9,16 @@
 	var cfg     = window.waicbKb || {};
 	var ajax    = cfg.ajaxUrl || '';
 	var nonce   = cfg.nonce || '';
+	var t       = cfg.i18n || {};
+
+	// Mini-sprintf : gère %s / %d et les positions %1$d, %2$d (comme côté PHP).
+	function fmt( tpl ) {
+		var args = Array.prototype.slice.call( arguments, 1 );
+		var i    = 0;
+		return String( tpl || '' )
+			.replace( /%(\d+)\$[ds]/g, function ( _, n ) { return args[ n - 1 ]; } )
+			.replace( /%[ds]/g, function () { return args[ i++ ]; } );
+	}
 	var box     = document.getElementById( 'waicb-kb-progress' );
 	var bar     = document.getElementById( 'waicb-kb-bar' );
 	var status  = document.getElementById( 'waicb-kb-status' );
@@ -32,33 +42,33 @@
 			.then( function ( res ) { return res.json(); } )
 			.then( function ( json ) {
 				if ( ! json || ! json.success ) {
-					var msg = json && json.data && json.data.message ? json.data.message : 'Erreur.';
-					status.textContent = 'Erreur : ' + msg;
+					var msg = json && json.data && json.data.message ? json.data.message : t.error;
+					status.textContent = fmt( t.errorWith, msg );
 					btn.disabled = false;
 					return;
 				}
-				var d = json.data;
+				var d     = json.data;
 				addResults( d.results );
-				var t   = d.total || 0;
-				var pct = t > 0 ? Math.min( 100, Math.round( ( d.processed / t ) * 100 ) ) : 100;
+				var tot = d.total || 0;
+				var pct = tot > 0 ? Math.min( 100, Math.round( ( d.processed / tot ) * 100 ) ) : 100;
 				bar.style.width = pct + '%';
-				status.textContent = ( t > 0 ? ( d.processed + ' / ' + t + ' contenus' ) : 'Terminé' ) +
-					' · ' + d.chunks_total + ' passages indexés';
+				status.textContent = ( tot > 0 ? fmt( t.progress, d.processed, tot ) : t.done ) +
+					' · ' + fmt( t.chunks, d.chunks_total );
 
 				if ( d.done ) {
 					btn.disabled = false;
-					btn.textContent = 'Synchroniser à nouveau';
+					btn.textContent = t.resync;
 					summary.style.display = '';
-					summary.innerHTML = '<strong>Terminé.</strong> ' +
-						'Indexés : ' + totals.indexed + ' · Inchangés : ' + totals.unchanged +
-						' · Ignorés : ' + ( totals.skipped + totals.skipped_quota ) +
-						( totals.error ? ' · Erreurs : ' + totals.error : '' ) + '.';
+					summary.innerHTML = '<strong>' + t.summaryDone + '</strong> ' +
+						t.labelIndexed + ' : ' + totals.indexed + ' · ' + t.labelUnchanged + ' : ' + totals.unchanged +
+						' · ' + t.labelSkipped + ' : ' + ( totals.skipped + totals.skipped_quota ) +
+						( totals.error ? ' · ' + t.labelErrors + ' : ' + totals.error : '' ) + '.';
 				} else {
-					step( page + 1, t );
+					step( page + 1, tot );
 				}
 			} )
 			.catch( function () {
-				status.textContent = 'Erreur réseau.';
+				status.textContent = t.networkError;
 				btn.disabled = false;
 			} );
 	}
@@ -68,7 +78,7 @@
 		box.style.display = '';
 		summary.style.display = 'none';
 		bar.style.width = '0';
-		status.textContent = 'Démarrage…';
+		status.textContent = t.starting;
 		Object.keys( totals ).forEach( function ( k ) { totals[ k ] = 0; } );
 		step( 1, 0 );
 	} );

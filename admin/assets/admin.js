@@ -58,6 +58,27 @@
         .then( function ( d ) {
             if ( d.success ) {
                 creditsEl.textContent = Number( d.data.credits ).toLocaleString( 'fr-FR' ) + ' ' + waicbAdmin.i18n.creditsSuffix;
+
+                // Quota mensuel du site (facultatif : null = sans plafond).
+                var quotaEl = document.getElementById( 'waicb-quota' );
+                if ( quotaEl ) {
+                    if ( d.data.quota ) {
+                        quotaEl.textContent = ' · ' + waicbAdmin.i18n.quotaPrefix + ' '
+                            + Number( d.data.quota_used ).toLocaleString( 'fr-FR' ) + ' / '
+                            + Number( d.data.quota ).toLocaleString( 'fr-FR' )
+                            + ' (' + d.data.quota_pct + ' %)';
+                    } else {
+                        quotaEl.textContent = ' · ' + waicbAdmin.i18n.quotaPrefix + ' ' + waicbAdmin.i18n.quotaUnlimited;
+                    }
+                }
+
+                // Autonomie estimée (facultatif : null = pas encore de consommation).
+                var autoEl = document.getElementById( 'waicb-autonomy' );
+                if ( autoEl && d.data.autonomy_days !== null ) {
+                    autoEl.textContent = ' · ' + waicbAdmin.i18n.autonomyLabel.replace(
+                        '%s', Number( d.data.autonomy_days ).toLocaleString( 'fr-FR' )
+                    );
+                }
             } else {
                 creditsEl.textContent = waicbAdmin.i18n.creditsUnavailable;
             }
@@ -149,8 +170,8 @@
             }
 
             mediaFrame = wp.media( {
-                title:    'Choisir l\'icône de la bulle',
-                button:   { text: 'Utiliser cette image' },
+                title:    waicbAdmin.i18n.chooseIcon,
+                button:   { text: waicbAdmin.i18n.useImage },
                 multiple: false,
                 library:  { type: 'image' },
             } );
