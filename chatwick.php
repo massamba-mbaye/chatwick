@@ -3,7 +3,7 @@
  * Plugin Name:       Chatwick
  * Plugin URI:        https://chatwick.app/
  * Description:       Add an AI chatbot to any site, powered by the Chatwick Cloud service (prepaid credits — no AI key to manage).
- * Version:           1.8.0
+ * Version:           1.9.0
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            Massamba MBAYE
@@ -19,11 +19,11 @@
 defined( 'ABSPATH' ) || exit;
 
 // ── Constantes ────────────────────────────────────────────────────────────────
-define( 'WAICB_VERSION', '1.8.0' );
+define( 'WAICB_VERSION', '1.9.0' );
 define( 'WAICB_FILE', __FILE__ );
 define( 'WAICB_DIR', plugin_dir_path( __FILE__ ) );
 define( 'WAICB_URL', plugin_dir_url( __FILE__ ) );
-define( 'WAICB_DB_VERSION', '1.0.0' );
+define( 'WAICB_DB_VERSION', '1.1.0' );
 
 // Service Cloud (Chatwick) — endpoint du proxy IA et tableau de bord client.
 define( 'WAICB_CLOUD_URL', 'https://api.chatwick.app/api/chat.php' );
@@ -52,7 +52,6 @@ spl_autoload_register( function ( $class_name ) {
 		'WAICB_Rest_Api'               => WAICB_DIR . 'includes/class-rest-api.php',
 		'WAICB_Admin_Settings'         => WAICB_DIR . 'includes/class-admin-settings.php',
 		'WAICB_Admin_Conversations'    => WAICB_DIR . 'includes/class-admin-conversations.php',
-		'WAICB_Admin_Logs'             => WAICB_DIR . 'includes/class-admin-logs.php',
 		'WAICB_Chatbot_Widget'         => WAICB_DIR . 'public/class-chatbot-widget.php',
 	);
 

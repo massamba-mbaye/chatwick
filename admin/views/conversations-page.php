@@ -13,10 +13,23 @@ $waicb_result      = WAICB_Database::get_sessions_paginated( $waicb_per_page, $w
 $waicb_sessions    = $waicb_result['rows'];
 $waicb_total       = $waicb_result['total'];
 $waicb_total_pages = (int) ceil( $waicb_total / $waicb_per_page );
-$waicb_deleted     = isset( $_GET['deleted'] ) && '1' === sanitize_key( $_GET['deleted'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+$waicb_deleted       = isset( $_GET['deleted'] ) && '1' === sanitize_key( $_GET['deleted'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+$waicb_has_cloud_key = '' !== get_option( 'waicb_cloud_key', '' );
 ?>
 <div class="wrap">
 	<h1><?php esc_html_e( 'Conversations', 'chatwick' ); ?></h1>
+
+	<?php if ( $waicb_has_cloud_key ) : ?>
+		<div class="waicb-conv-summary" id="waicb-conv-summary">
+			<span class="waicb-conv-summary__item">
+				<?php esc_html_e( 'Crédits :', 'chatwick' ); ?>
+				<strong id="waicb-credits">…</strong>
+			</span>
+			<span class="waicb-conv-summary__item" id="waicb-quota"></span>
+			<span class="waicb-conv-summary__item" id="waicb-autonomy"></span>
+			<a class="waicb-conv-summary__link" href="<?php echo esc_url( WAICB_CLOUD_DASHBOARD ); ?>" target="_blank" rel="noopener"><?php esc_html_e( 'Recharger', 'chatwick' ); ?></a>
+		</div>
+	<?php endif; ?>
 
 	<?php if ( $waicb_deleted ) : ?>
 		<div class="notice notice-success is-dismissible">

@@ -54,23 +54,13 @@ class WAICB_Database {
 			KEY session_id (session_id)
 		) $charset_collate;";
 
-		// Logs table.
-		$sql_logs = "CREATE TABLE {$wpdb->prefix}aichat_logs (
-			id                BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-			session_id        BIGINT UNSIGNED NOT NULL,
-			model             VARCHAR(64)     NOT NULL,
-			prompt_tokens     INT UNSIGNED    NOT NULL DEFAULT 0,
-			completion_tokens INT UNSIGNED    NOT NULL DEFAULT 0,
-			total_tokens      INT UNSIGNED    NOT NULL DEFAULT 0,
-			cost_usd          DECIMAL(10,6)   NOT NULL DEFAULT 0.000000,
-			created_at        DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
-			PRIMARY KEY (id),
-			KEY session_id (session_id)
-		) $charset_collate;";
-
 		dbDelta( $sql_sessions );
 		dbDelta( $sql_messages );
-		dbDelta( $sql_logs );
+
+		// Les logs de tokens locaux ont été retirés (tokens et coûts sont suivis
+		// côté SaaS) : on supprime la table orpheline sur les installations mises à jour.
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}aichat_logs" );
 
 		update_option( 'waicb_db_version', WAICB_DB_VERSION );
 	}
@@ -212,7 +202,7 @@ class WAICB_Database {
 	}
 
 	/**
-	 * Delete a session and cascade-delete its messages and logs.
+	 * Delete a session and cascade-delete its messages.
 	 *
 	 * @param int $session_id Session ID.
 	 * @return void
@@ -223,22 +213,19 @@ class WAICB_Database {
 		$session_id = (int) $session_id;
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
-		$wpdb->delete( $wpdb->prefix . 'aichat_logs', array( 'session_id' => $session_id ), array( '%d' ) );
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
 		$wpdb->delete( $wpdb->prefix . 'aichat_messages', array( 'session_id' => $session_id ), array( '%d' ) );
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
 		$wpdb->delete( $wpdb->prefix . 'aichat_sessions', array( 'id' => $session_id ), array( '%d' ) );
 	}
 
 	/**
-	 * Delete all sessions, messages, and logs.
+	 * Delete all sessions and messages.
 	 *
 	 * @return void
 	 */
 	public static function delete_all_sessions() {
 		global $wpdb;
 
-		$wpdb->query( "TRUNCATE TABLE {$wpdb->prefix}aichat_logs" );     // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		$wpdb->query( "TRUNCATE TABLE {$wpdb->prefix}aichat_messages" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		$wpdb->query( "TRUNCATE TABLE {$wpdb->prefix}aichat_sessions" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 	}
@@ -325,97 +312,4 @@ class WAICB_Database {
 		return $rows ? $rows : array();
 	}
 
-	// ── Logs ──────────────────────────────────────────────────────────────────
-
-	/**
-	 * Insert an API log entry.
-	 *
-	 * @param int    $session_id        Session ID.
-	 * @param string $model             Model name.
-	 * @param int    $prompt_tokens     Prompt token count.
-	 * @param int    $completion_tokens Completion token count.
-	 * @param int    $total_tokens      Total token count.
-	 * @param float  $cost_usd          Cost in USD.
-	 * @return void
-	 */
-	public static function insert_log( $session_id, $model, $prompt_tokens, $completion_tokens, $total_tokens, $cost_usd ) {
-		global $wpdb;
-
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
-		$wpdb->insert(
-			$wpdb->prefix . 'aichat_logs',
-			array(
-				'session_id'        => (int) $session_id,
-				'model'             => $model,
-				'prompt_tokens'     => (int) $prompt_tokens,
-				'completion_tokens' => (int) $completion_tokens,
-				'total_tokens'      => (int) $total_tokens,
-				'cost_usd'          => (float) $cost_usd,
-				'created_at'        => current_time( 'mysql' ),
-			),
-			array( '%d', '%s', '%d', '%d', '%d', '%f', '%s' )
-		);
-	}
-
-	/**
-	 * Get paginated logs with session info.
-	 *
-	 * @param int $per_page Number of rows per page.
-	 * @param int $page     Current page (1-based).
-	 * @return array {rows, total, totals}.
-	 */
-	public static function get_logs_paginated( $per_page = 30, $page = 1 ) {
-		global $wpdb;
-
-		$logs_table     = esc_sql( $wpdb->prefix . 'aichat_logs' );
-		$sessions_table = esc_sql( $wpdb->prefix . 'aichat_sessions' );
-		$offset         = ( $page - 1 ) * $per_page;
-
-		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching,WordPress.DB.SlowDBQuery.slow_db_query_field_in
-		$rows = $wpdb->get_results(
-			$wpdb->prepare(
-				"SELECT l.*, s.session_key
-				 FROM {$logs_table} l
-				 LEFT JOIN {$sessions_table} s ON s.id = l.session_id
-				 ORDER BY l.id DESC
-				 LIMIT %d OFFSET %d",
-				$per_page,
-				$offset
-			),
-			ARRAY_A
-		);
-
-		$total = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$logs_table}" );
-
-		$totals = $wpdb->get_row(
-			"SELECT SUM(prompt_tokens) AS prompt_tokens,
-			        SUM(completion_tokens) AS completion_tokens,
-			        SUM(total_tokens) AS total_tokens,
-			        SUM(cost_usd) AS cost_usd
-			 FROM {$logs_table}",
-			ARRAY_A
-		);
-		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching,WordPress.DB.SlowDBQuery.slow_db_query_field_in
-
-		// get_row() returns null when the table is empty/missing — normalise so
-		// callers can always read the keys without warnings.
-		if ( ! is_array( $totals ) ) {
-			$totals = array();
-		}
-		$totals = array_merge(
-			array(
-				'prompt_tokens'     => 0,
-				'completion_tokens' => 0,
-				'total_tokens'      => 0,
-				'cost_usd'          => 0,
-			),
-			$totals
-		);
-
-		return array(
-			'rows'   => $rows ? $rows : array(),
-			'total'  => $total,
-			'totals' => $totals,
-		);
-	}
 }

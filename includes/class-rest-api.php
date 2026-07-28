@@ -92,7 +92,6 @@ class WAICB_Rest_Api {
 			$result = WAICB_Api_Router::dispatch( $clean_message, $session_id, $history, $body_sk );
 
 			$reply = isset( $result['reply'] ) ? $result['reply'] : '';
-			$usage = isset( $result['usage'] ) ? $result['usage'] : array();
 
 			// Filter reply before saving / sending.
 			$reply = apply_filters( 'waicb_before_send_response', $reply, $session_id );
@@ -101,21 +100,7 @@ class WAICB_Rest_Api {
 			WAICB_Database::save_message( $session_id, 'user', $clean_message );
 			WAICB_Database::save_message( $session_id, 'assistant', $reply );
 
-			// 9. Insert log. The engine reports the actual model used.
-			$model = isset( $result['model'] ) && '' !== $result['model']
-				? $result['model']
-				: 'cloud';
-
-			WAICB_Database::insert_log(
-				$session_id,
-				$model,
-				isset( $usage['prompt_tokens'] ) ? (int) $usage['prompt_tokens'] : 0,
-				isset( $usage['completion_tokens'] ) ? (int) $usage['completion_tokens'] : 0,
-				isset( $usage['total_tokens'] ) ? (int) $usage['total_tokens'] : 0,
-				0.0
-			);
-
-			// 10. Fire action hook.
+			// 9. Fire action hook.
 			do_action( 'waicb_after_exchange_saved', $session_id, $clean_message, $reply );
 
 			return rest_ensure_response(
@@ -251,7 +236,15 @@ class WAICB_Rest_Api {
 		$data = json_decode( wp_remote_retrieve_body( $response ), true );
 
 		if ( 200 === $code && is_array( $data ) && isset( $data['credits_left'] ) ) {
-			wp_send_json_success( array( 'credits' => (int) $data['credits_left'] ) );
+			wp_send_json_success(
+				array(
+					'credits'       => (int) $data['credits_left'],
+					'quota'         => isset( $data['quota'] ) && null !== $data['quota'] ? (int) $data['quota'] : null,
+					'quota_used'    => isset( $data['quota_used'] ) ? (int) $data['quota_used'] : 0,
+					'quota_pct'     => isset( $data['quota_pct'] ) ? (int) $data['quota_pct'] : 0,
+					'autonomy_days' => isset( $data['autonomy_days'] ) && null !== $data['autonomy_days'] ? (int) $data['autonomy_days'] : null,
+				)
+			);
 			return;
 		}
 

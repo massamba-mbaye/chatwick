@@ -78,12 +78,10 @@ class WAICB_Plugin_Core {
 
 		$settings      = new WAICB_Admin_Settings();
 		$conversations = new WAICB_Admin_Conversations();
-		$logs          = new WAICB_Admin_Logs();
 		$kb            = new WAICB_Admin_KB();
 
 		$settings->init();
 		$conversations->init();
-		$logs->init();
 		$kb->init();
 
 		// AJAX handlers must be registered outside rest_api_init to fire on admin-ajax.php.

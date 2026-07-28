@@ -82,6 +82,7 @@ $waicb_step_class = function ( $done, $n ) use ( $waicb_active ) {
 			<span class="waicb-status__right">
 				<?php esc_html_e( 'Crédits :', 'chatwick' ); ?>
 				<strong id="waicb-credits">…</strong>
+				<span id="waicb-quota" class="waicb-status__quota"></span>
 				&middot; <a href="<?php echo esc_url( WAICB_CLOUD_DASHBOARD ); ?>" target="_blank" rel="noopener"><?php esc_html_e( 'Recharger', 'chatwick' ); ?></a>
 			</span>
 		<?php endif; ?>

@@ -191,6 +191,13 @@
     50%       { opacity: .6; transform: scale(.85); }
 }
 
+.waicb-panel__actions {
+    display:     flex;
+    align-items: center;
+    gap:         2px;
+    flex-shrink: 0;
+}
+
 .waicb-panel__close {
     background:  transparent;
     border:      none;
@@ -205,6 +212,23 @@
 }
 
 .waicb-panel__close:hover { opacity: 1; }
+
+.waicb-panel__reset {
+    background:      transparent;
+    border:          none;
+    color:           #fff;
+    cursor:          pointer;
+    padding:         4px;
+    opacity:         .8;
+    transition:      opacity .15s;
+    display:         flex;
+    align-items:     center;
+    justify-content: center;
+    border-radius:   6px;
+    flex-shrink:     0;
+}
+
+.waicb-panel__reset:hover { opacity: 1; }
 
 /* ── Messages area ──────────────────────────────────────────────────────────── */
 

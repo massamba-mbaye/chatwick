@@ -3,7 +3,7 @@ Contributors:      massambambaye
 Tags:              chatbot, ai, assistant, chatwick, support
 Requires at least: 6.0
 Tested up to:      7.0
-Stable tag:        1.8.0
+Stable tag:        1.9.0
 Requires PHP:      7.4
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -96,6 +96,14 @@ By installing this plugin and connecting your account key, you agree to the Chat
 
 == Changelog ==
 
+= 1.9.0 =
+* New: the Conversations screen now shows a summary bar with your remaining credits, the site's monthly quota (used / limit and percentage) and the estimated balance autonomy in days.
+* New: the settings screen now shows your site's monthly quota (used / limit and percentage, or "unlimited") next to your credit balance.
+* New: a reset button in the chat header lets visitors start a fresh conversation at any time.
+* New: the saved conversation now clears automatically after 24h of inactivity, in line with the server's conversation window.
+* Improvement: the chat now always scrolls to the latest message when you send one and when the assistant replies.
+* Housekeeping: removed the obsolete "API Logs" screen and its local token log (usage and costs are tracked in your Chatwick account); the unused local table is dropped on update.
+
 = 1.8.0 =
 * New: the conversation now stays visible when the visitor switches tabs or reloads the page, until the session expires (the transcript is restored on load).
 * New: "Bubble effect" appearance setting. Make the floating bubble more visible with a soft shadow, a colored glow, or a glow with pulse. The effect uses your main color automatically. Respects reduced-motion preferences.
@@ -164,6 +172,9 @@ By installing this plugin and connecting your account key, you agree to the Chat
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.9.0 =
+The settings screen now shows your site's monthly quota next to your balance, and the chat always scrolls to the latest message. The obsolete API Logs screen is removed and its unused local table is dropped on update.
 
 = 1.7.0 =
 The assistant can now answer from your own site content (knowledge base / RAG) with automatic background sync. Requires the Chatwick service to be updated and RAG enabled for your account.

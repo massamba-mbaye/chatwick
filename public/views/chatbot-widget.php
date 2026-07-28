@@ -84,9 +84,19 @@ $waicb_rgb = ( 6 === strlen( $waicb_hex ) && ctype_xdigit( $waicb_hex ) )
 				</div>
 			</div>
 		</div>
-		<?php if ( 'bubble' === $waicb_mode ) : ?>
-		<button class="waicb-panel__close" aria-label="<?php esc_attr_e( 'Fermer', 'chatwick' ); ?>" type="button">&times;</button>
-		<?php endif; ?>
+		<div class="waicb-panel__actions">
+			<button class="waicb-panel__reset" id="waicb-reset" type="button"
+			        aria-label="<?php esc_attr_e( 'Réinitialiser la conversation', 'chatwick' ); ?>"
+			        title="<?php esc_attr_e( 'Réinitialiser la conversation', 'chatwick' ); ?>">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" aria-hidden="true">
+					<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/>
+					<path d="M3 3v5h5"/>
+				</svg>
+			</button>
+			<?php if ( 'bubble' === $waicb_mode ) : ?>
+			<button class="waicb-panel__close" aria-label="<?php esc_attr_e( 'Fermer', 'chatwick' ); ?>" type="button">&times;</button>
+			<?php endif; ?>
+		</div>
 	</div>
 
 	<!-- ── Messages area ──────────────────────────────────────────── -->

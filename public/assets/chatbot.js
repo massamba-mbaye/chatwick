@@ -34,6 +34,9 @@
     function lsSet( key, value ) {
         try { window.localStorage.setItem( key, value ); } catch ( e ) {}
     }
+    function lsRemove( key ) {
+        try { window.localStorage.removeItem( key ); } catch ( e ) {}
+    }
 
     // Persiste l'identité dans le cookie ET le localStorage : elle survit ainsi à
     // l'effacement de l'un OU de l'autre (cas le plus courant de cookie « perdu »).
@@ -55,14 +58,25 @@
     // ── Transcription (persistance de la conversation affichée) ──────────────
     // Les messages sont conservés dans le localStorage, rattachés à la session
     // courante : la conversation reste visible en changeant d'onglet ou en
-    // rechargeant, jusqu'à ce que la session change (nouvelle identité/expiration).
-    var TRANSCRIPT_KEY = 'waicb_transcript';
+    // rechargeant, et est effacée automatiquement après un délai d'inactivité.
+    // Ce délai reprend la valeur PAR DÉFAUT de la fenêtre de conversation serveur
+    // (CONVERSATION_WINDOW_HOURS = 24 h) ; purement cosmétique (au-delà, le serveur
+    // démarre de toute façon une nouvelle conversation facturable), donc une
+    // divergence si ce réglage change côté serveur reste sans conséquence.
+    var TRANSCRIPT_KEY    = 'waicb_transcript';
+    var TRANSCRIPT_TTL_MS = 24 * 60 * 60 * 1000; // 24 h (défaut serveur)
     function loadTranscript() {
         try {
             var raw = JSON.parse( lsGet( TRANSCRIPT_KEY ) || 'null' );
-            if ( raw && raw.sk === sessionKey && Array.isArray( raw.msgs ) ) {
-                return raw.msgs;
+            if ( ! raw || raw.sk !== sessionKey || ! Array.isArray( raw.msgs ) ) {
+                return [];
             }
+            // Expiration : dernier message trop ancien -> on repart à zéro.
+            if ( raw.ts && ( Date.now() - raw.ts ) > TRANSCRIPT_TTL_MS ) {
+                lsRemove( TRANSCRIPT_KEY );
+                return [];
+            }
+            return raw.msgs;
         } catch ( e ) {}
         return [];
     }
@@ -70,7 +84,7 @@
         var msgs = loadTranscript();
         msgs.push( { role: role, content: content } );
         if ( msgs.length > 60 ) { msgs = msgs.slice( -60 ); } // borne la taille
-        lsSet( TRANSCRIPT_KEY, JSON.stringify( { sk: sessionKey, msgs: msgs } ) ); // lsSet gère le try/catch
+        lsSet( TRANSCRIPT_KEY, JSON.stringify( { sk: sessionKey, msgs: msgs, ts: Date.now() } ) ); // lsSet gère le try/catch
     }
 
     // ── Time formatter ───────────────────────────────────────────────────────
@@ -199,6 +213,7 @@
     var bubble       = document.getElementById( 'waicb-bubble' );
     var panel        = document.getElementById( 'waicb-panel' );
     var closeBtn     = panel ? panel.querySelector( '.waicb-panel__close' ) : null;
+    var resetBtn     = document.getElementById( 'waicb-reset' );
     var messages     = document.getElementById( 'waicb-messages' );
     var input        = document.getElementById( 'waicb-input' );
     var sendBtn      = document.getElementById( 'waicb-send' );
@@ -240,24 +255,52 @@
         } );
     }
 
+    // Affiche le message d'accueil + les suggestions, une seule fois.
+    function showWelcome() {
+        if ( welcomeShown || ! waicbConfig.welcomeMessage ) { return; }
+        welcomeShown = true;
+        appendMessage( 'assistant', waicbConfig.welcomeMessage );
+        renderQuickReplies();
+    }
+
     // ── Panel open / close ───────────────────────────────────────────────────
     function openPanel() {
         isOpen = true;
         panel.classList.add( 'waicb-panel--open' );
         panel.setAttribute( 'aria-modal', 'true' );
         input.focus();
-
-        if ( ! welcomeShown && waicbConfig.welcomeMessage ) {
-            welcomeShown = true;
-            appendMessage( 'assistant', waicbConfig.welcomeMessage );
-            renderQuickReplies();
-        }
+        showWelcome();
     }
 
     function closePanel() {
         isOpen = false;
         panel.classList.remove( 'waicb-panel--open' );
         panel.setAttribute( 'aria-modal', 'false' );
+    }
+
+    // Réinitialise la conversation : efface l'historique affiché et démarre une
+    // identité neuve (le prochain message ouvre une nouvelle conversation côté
+    // serveur), puis réaffiche le message d'accueil et les suggestions.
+    function clearConversation() {
+        lsRemove( TRANSCRIPT_KEY );
+        messages.innerHTML = '';
+        if ( scrollBtn ) { scrollBtn.classList.remove( 'waicb-scroll-btn--visible' ); }
+
+        sessionKey = generateUUID();
+        persistSession( sessionKey );
+
+        welcomeShown        = false;
+        conversationStarted = false;
+        showWelcome();
+        input.focus();
+    }
+
+    if ( resetBtn ) {
+        resetBtn.addEventListener( 'click', function () {
+            if ( window.confirm( waicbConfig.i18n.confirmReset ) ) {
+                clearConversation();
+            }
+        } );
     }
 
     if ( bubble ) {
@@ -289,10 +332,8 @@
     })();
 
     // If shortcode mode, show welcome immediately (sauf conversation déjà en cours).
-    if ( panel.dataset.mode === 'shortcode' && waicbConfig.welcomeMessage && ! welcomeShown ) {
-        welcomeShown = true;
-        appendMessage( 'assistant', waicbConfig.welcomeMessage );
-        renderQuickReplies();
+    if ( panel.dataset.mode === 'shortcode' ) {
+        showWelcome();
     }
 
     // ── Avatar helper ────────────────────────────────────────────────────────
@@ -317,7 +358,10 @@
     }
 
     // ── Append a message bubble ──────────────────────────────────────────────
-    function appendMessage( role, content, record ) {
+    // forceScroll : défile toujours jusqu'en bas (envoi de l'utilisateur, réponse
+    // du bot). Sinon on ne défile que si l'utilisateur est déjà en bas, pour ne
+    // pas le « tirer » vers le bas pendant qu'il relit un message plus haut.
+    function appendMessage( role, content, record, forceScroll ) {
         var wrapper = document.createElement( 'div' );
         wrapper.className = 'waicb-msg waicb-msg--' + role;
 
@@ -362,8 +406,8 @@
             recordMessage( role, content );
         }
 
-        // Scroll only if near bottom.
-        if ( isNearBottom() ) {
+        // Défile jusqu'au dernier message (toujours sur demande explicite).
+        if ( forceScroll || isNearBottom() ) {
             scrollToBottom();
         }
 
@@ -459,7 +503,7 @@
             hideQuickReplies();
         }
 
-        lastUserMsgEl = appendMessage( 'user', text, true );
+        lastUserMsgEl = appendMessage( 'user', text, true, true );
         showTyping();
 
         fetch( waicbConfig.restUrl, {
@@ -494,7 +538,7 @@
             }
 
             if ( data.success && data.data && data.data.reply ) {
-                appendMessage( 'assistant', data.data.reply, true );
+                appendMessage( 'assistant', data.data.reply, true, true );
                 if ( data.data.session_key ) {
                     sessionKey = data.data.session_key;
                     persistSession( sessionKey );
@@ -503,13 +547,13 @@
                 var errMsg = ( data.data && data.data.message )
                     ? data.data.message
                     : waicbConfig.i18n.errorMessage;
-                appendMessage( 'error', errMsg );
+                appendMessage( 'error', errMsg, false, true );
             }
         } )
         .catch( function () {
             hideTyping();
             sendBtn.disabled = false;
-            appendMessage( 'error', waicbConfig.i18n.errorMessage );
+            appendMessage( 'error', waicbConfig.i18n.errorMessage, false, true );
         } );
     }
 

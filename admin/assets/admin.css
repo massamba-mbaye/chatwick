@@ -2,6 +2,27 @@
  * WordPress AI Chatbot — Admin styles.
  */
 
+/* ── Conversations summary bar (crédits / quota / autonomie) ─────────────────── */
+
+.waicb-conv-summary {
+    display:       flex;
+    align-items:   center;
+    flex-wrap:     wrap;
+    gap:           2px;
+    margin:        12px 0 16px;
+    padding:       10px 16px;
+    background:    #fff;
+    border:        1px solid #dcdcde;
+    border-left:   4px solid #C49A2E;
+    border-radius: 6px;
+    font-size:     13px;
+    color:         #3c434a;
+}
+
+.waicb-conv-summary strong { font-weight: 600; }
+
+.waicb-conv-summary__link { margin-left: 10px; }
+
 /* ── Settings page ─────────────────────────────────────────────────────────── */
 
 .waicb-settings-wrap h2 {

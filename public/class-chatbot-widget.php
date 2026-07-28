@@ -94,6 +94,7 @@ class WAICB_Chatbot_Widget {
 					'placeholder'  => __( 'Écrivez votre message…', 'chatwick' ),
 					'send'         => __( 'Envoyer', 'chatwick' ),
 					'errorMessage' => __( 'Une erreur est survenue. Veuillez réessayer.', 'chatwick' ),
+					'confirmReset' => __( 'Réinitialiser la conversation ? Les messages affichés seront effacés.', 'chatwick' ),
 				),
 			)
 		);
