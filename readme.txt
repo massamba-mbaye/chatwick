@@ -97,6 +97,7 @@ By installing this plugin and connecting your account key, you agree to the Chat
 == Changelog ==
 
 = 1.9.1 =
+* Improve: the assistant now introduces itself with your site's name when no custom persona is set, instead of a generic message.
 * Improve: full internationalization of the admin interface. The knowledge base sync screen and the media picker labels now go through the translation system, and the translation template (.pot) has been refreshed.
 
 = 1.9.0 =
@@ -177,7 +178,7 @@ By installing this plugin and connecting your account key, you agree to the Chat
 == Upgrade Notice ==
 
 = 1.9.1 =
-The admin interface is now fully translatable and the translation template has been refreshed. No functional change.
+The assistant now introduces itself with your site's name, and the admin interface is fully translatable with a refreshed translation template.
 
 = 1.9.0 =
 The settings screen now shows your site's monthly quota next to your balance, and the chat always scrolls to the latest message. The obsolete API Logs screen is removed and its unused local table is dropped on update.

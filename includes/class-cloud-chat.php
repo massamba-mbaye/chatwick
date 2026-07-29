@@ -59,6 +59,10 @@ class WAICB_Cloud_Chat {
 			// privée, cookies bloqués) : IP visiteur hashée + salée, anonyme et stable.
 			'ip_hash'         => WAICB_Security::hash_ip(),
 			'site_url'        => home_url(),
+			// Nom lisible du site : alimente le persona par défaut de l'assistant
+			// côté SaaS (« l'assistant virtuel de <nom> ») quand aucune instruction
+			// personnalisée n'est définie.
+			'site_name'       => wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES ),
 		);
 
 		$response = wp_remote_post(
