@@ -19,6 +19,11 @@ $waicb_cookie_days     = (int) get_option( 'waicb_cookie_days', 90 );
 $waicb_quick_replies   = get_option( 'waicb_quick_replies', '' );
 $waicb_enabled         = (bool) get_option( 'waicb_enabled', true );
 
+$waicb_handoff_enabled = (bool) get_option( 'waicb_handoff_enabled', true );
+$waicb_whatsapp_number = get_option( 'waicb_whatsapp_number', '' );
+$waicb_handoff_email   = get_option( 'waicb_handoff_email', '' );
+$waicb_handoff_message = get_option( 'waicb_handoff_message', '' );
+
 $waicb_display_mode  = get_option( 'waicb_display_mode', 'all' );
 $waicb_display_pages = get_option( 'waicb_display_pages', array() );
 if ( ! is_array( $waicb_display_pages ) ) {
@@ -87,6 +92,24 @@ $waicb_step_class = function ( $done, $n ) use ( $waicb_active ) {
 			</span>
 		<?php endif; ?>
 	</div>
+
+	<?php if ( $waicb_has_cloud_key ) : ?>
+		<div id="waicb-recharge-nudge" class="waicb-recharge-nudge" style="display:none;">
+			<?php
+			echo wp_kses(
+				sprintf(
+					/* translators: %s: recharge page URL */
+					__( '<strong>Vos crédits sont épuisés.</strong> L\'assistant IA est en pause sur votre site (les visiteurs voient le repli « parler à un humain »). <a href="%s" target="_blank" rel="noopener">Rechargez maintenant</a> pour le réactiver.', 'chatwick' ),
+					esc_url( WAICB_CLOUD_DASHBOARD )
+				),
+				array(
+					'strong' => array(),
+					'a'      => array( 'href' => array(), 'target' => array(), 'rel' => array() ),
+				)
+			);
+			?>
+		</div>
+	<?php endif; ?>
 
 	<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 		<input type="hidden" name="action" value="waicb_save_settings">
@@ -267,6 +290,40 @@ $waicb_step_class = function ( $done, $n ) use ( $waicb_active ) {
 					<tr>
 						<th scope="row"><label for="waicb_cookie_days"><?php esc_html_e( 'Durée du cookie (jours)', 'chatwick' ); ?></label></th>
 						<td><input type="number" id="waicb_cookie_days" name="waicb_cookie_days" value="<?php echo esc_attr( $waicb_cookie_days ); ?>" min="1" max="365" class="small-text"></td>
+					</tr>
+				</table>
+
+				<h3 style="margin-top:24px;"><?php esc_html_e( 'Repli « parler à un humain » (à court de crédits)', 'chatwick' ); ?></h3>
+				<p class="description" style="margin-bottom:8px;"><?php esc_html_e( 'Quand vos crédits sont épuisés, l\'assistant IA est masqué et le visiteur peut vous joindre par WhatsApp ou laisser un message.', 'chatwick' ); ?></p>
+				<table class="form-table" role="presentation" style="margin-top:0;">
+					<tr>
+						<th scope="row"><?php esc_html_e( 'Activer le repli', 'chatwick' ); ?></th>
+						<td>
+							<label>
+								<input type="checkbox" name="waicb_handoff_enabled" value="1" <?php checked( $waicb_handoff_enabled ); ?>>
+								<?php esc_html_e( 'Proposer un contact humain quand le chatbot est indisponible', 'chatwick' ); ?>
+							</label>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row"><label for="waicb_whatsapp_number"><?php esc_html_e( 'Numéro WhatsApp', 'chatwick' ); ?></label></th>
+						<td>
+							<input type="text" id="waicb_whatsapp_number" name="waicb_whatsapp_number" value="<?php echo esc_attr( $waicb_whatsapp_number ); ?>" class="regular-text" placeholder="221771234567" inputmode="numeric">
+							<p class="description"><?php esc_html_e( 'Format international sans le +, ex. 221771234567. Laisser vide pour n\'utiliser que le formulaire.', 'chatwick' ); ?></p>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row"><label for="waicb_handoff_email"><?php esc_html_e( 'E-mail de réception', 'chatwick' ); ?></label></th>
+						<td>
+							<input type="email" id="waicb_handoff_email" name="waicb_handoff_email" value="<?php echo esc_attr( $waicb_handoff_email ); ?>" class="regular-text" placeholder="<?php echo esc_attr( get_option( 'admin_email' ) ); ?>">
+							<p class="description"><?php esc_html_e( 'Où recevoir les messages laissés par les visiteurs. Par défaut, l\'e-mail d\'administration du site.', 'chatwick' ); ?></p>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row"><label for="waicb_handoff_message"><?php esc_html_e( 'Message affiché', 'chatwick' ); ?></label></th>
+						<td>
+							<textarea id="waicb_handoff_message" name="waicb_handoff_message" rows="2" class="large-text" placeholder="<?php esc_attr_e( 'Notre assistant est momentanément indisponible. Écrivez-nous, nous vous répondrons vite !', 'chatwick' ); ?>"><?php echo esc_textarea( $waicb_handoff_message ); ?></textarea>
+						</td>
 					</tr>
 				</table>
 			</div>

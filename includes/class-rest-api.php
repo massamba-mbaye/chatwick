@@ -32,6 +32,146 @@ class WAICB_Rest_Api {
 				'permission_callback' => '__return_true',
 			)
 		);
+
+		// Statut public (lecture) : le widget sait si le chat peut démarrer, sinon
+		// il bascule en repli « parler à un humain ». Réponse mise en cache (60 s).
+		register_rest_route(
+			self::NAMESPACE,
+			'/status',
+			array(
+				'methods'             => WP_REST_Server::READABLE,
+				'callback'            => array( $this, 'handle_public_status' ),
+				'permission_callback' => '__return_true',
+			)
+		);
+
+		// Repli humain : le visiteur laisse un message quand l'assistant est
+		// indisponible (crédits épuisés) ; envoyé par e-mail au propriétaire.
+		register_rest_route(
+			self::NAMESPACE,
+			'/handoff',
+			array(
+				'methods'             => WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'handle_handoff' ),
+				'permission_callback' => '__return_true',
+			)
+		);
+	}
+
+	/**
+	 * GET /wp-json/waicb/v1/status — le chat peut-il démarrer une conversation ?
+	 *
+	 * Interroge le statut Cloud (clé stockée, jamais exposée) et met le résultat en
+	 * cache 60 s. Défaut permissif (true) si le statut est indisponible : on ne
+	 * coupe jamais le chat à cause d'un simple hoquet réseau.
+	 *
+	 * @return WP_REST_Response
+	 */
+	public function handle_public_status() {
+		if ( ! get_option( 'waicb_enabled', true ) ) {
+			return rest_ensure_response( array( 'chat_available' => false ) );
+		}
+
+		$cached = get_transient( 'waicb_chat_available' );
+		if ( false !== $cached ) {
+			return rest_ensure_response( array( 'chat_available' => ( '1' === $cached ) ) );
+		}
+
+		$available   = true; // défaut permissif
+		$account_key = WAICB_Crypto::decrypt( get_option( 'waicb_cloud_key', '' ) );
+		if ( '' !== $account_key ) {
+			$response = wp_remote_post(
+				WAICB_CLOUD_STATUS_URL,
+				array(
+					'timeout' => 8,
+					'headers' => array( 'Content-Type' => 'application/json' ),
+					'body'    => wp_json_encode(
+						array(
+							'account_key' => $account_key,
+							'site_url'    => home_url(),
+						)
+					),
+				)
+			);
+			if ( ! is_wp_error( $response ) && 200 === wp_remote_retrieve_response_code( $response ) ) {
+				$data = json_decode( wp_remote_retrieve_body( $response ), true );
+				if ( is_array( $data ) && isset( $data['chat_available'] ) ) {
+					$available = (bool) $data['chat_available'];
+				}
+			}
+		}
+
+		set_transient( 'waicb_chat_available', $available ? '1' : '0', 60 );
+		return rest_ensure_response( array( 'chat_available' => $available ) );
+	}
+
+	/**
+	 * POST /wp-json/waicb/v1/handoff — message du visiteur (repli humain), envoyé
+	 * par e-mail au propriétaire. Protégé par nonce + rate-limit + honeypot.
+	 *
+	 * @param WP_REST_Request $request Requête entrante.
+	 * @return WP_REST_Response|WP_Error
+	 */
+	public function handle_handoff( WP_REST_Request $request ) {
+		$body  = $request->get_json_params();
+		$nonce = isset( $body['nonce'] ) ? sanitize_text_field( $body['nonce'] ) : '';
+
+		try {
+			WAICB_Security::verify_nonce( $nonce );
+			WAICB_Security::check_rate_limit( WAICB_Security::hash_ip() );
+		} catch ( Exception $e ) {
+			return new WP_Error( 'forbidden', $e->getMessage(), array( 'status' => 403 ) );
+		}
+
+		// Honeypot : un champ caché rempli = bot. On répond « OK » sans rien envoyer.
+		if ( ! empty( $body['website'] ) ) {
+			return rest_ensure_response( array( 'success' => true, 'data' => array( 'message' => __( 'Message envoyé.', 'chatwick' ) ) ) );
+		}
+
+		$name    = isset( $body['name'] ) ? sanitize_text_field( $body['name'] ) : '';
+		$email   = isset( $body['email'] ) ? sanitize_email( $body['email'] ) : '';
+		$message = isset( $body['message'] ) ? sanitize_textarea_field( $body['message'] ) : '';
+		$page    = isset( $body['page'] ) ? esc_url_raw( $body['page'] ) : home_url();
+
+		if ( '' === $message ) {
+			return rest_ensure_response( array( 'success' => false, 'data' => array( 'message' => __( 'Veuillez saisir un message.', 'chatwick' ) ) ) );
+		}
+
+		$to = get_option( 'waicb_handoff_email', '' );
+		if ( '' === $to || ! is_email( $to ) ) {
+			$to = get_option( 'admin_email' );
+		}
+
+		$lines   = array();
+		$lines[] = __( 'Un visiteur a laissé un message alors que l\'assistant IA était indisponible :', 'chatwick' );
+		$lines[] = '';
+		if ( '' !== $name ) {
+			$lines[] = __( 'Nom :', 'chatwick' ) . ' ' . $name;
+		}
+		if ( '' !== $email ) {
+			$lines[] = __( 'E-mail :', 'chatwick' ) . ' ' . $email;
+		}
+		$lines[] = __( 'Message :', 'chatwick' ) . ' ' . $message;
+		$lines[] = '';
+		$lines[] = __( 'Page :', 'chatwick' ) . ' ' . $page;
+
+		$headers = array();
+		if ( '' !== $email && is_email( $email ) ) {
+			$headers[] = 'Reply-To: ' . ( '' !== $name ? $name . ' ' : '' ) . '<' . $email . '>';
+		}
+
+		$sent = wp_mail( $to, __( 'Nouveau message depuis votre chatbot (crédits épuisés)', 'chatwick' ), implode( "\n", $lines ), $headers );
+
+		return rest_ensure_response(
+			array(
+				'success' => (bool) $sent,
+				'data'    => array(
+					'message' => $sent
+						? __( 'Message envoyé. Nous vous répondrons bientôt.', 'chatwick' )
+						: __( 'L\'envoi a échoué, réessayez plus tard.', 'chatwick' ),
+				),
+			)
+		);
 	}
 
 	/**
@@ -241,8 +381,9 @@ class WAICB_Rest_Api {
 					'credits'       => (int) $data['credits_left'],
 					'quota'         => isset( $data['quota'] ) && null !== $data['quota'] ? (int) $data['quota'] : null,
 					'quota_used'    => isset( $data['quota_used'] ) ? (int) $data['quota_used'] : 0,
-					'quota_pct'     => isset( $data['quota_pct'] ) ? (int) $data['quota_pct'] : 0,
-					'autonomy_days' => isset( $data['autonomy_days'] ) && null !== $data['autonomy_days'] ? (int) $data['autonomy_days'] : null,
+					'quota_pct'      => isset( $data['quota_pct'] ) ? (int) $data['quota_pct'] : 0,
+					'autonomy_days'  => isset( $data['autonomy_days'] ) && null !== $data['autonomy_days'] ? (int) $data['autonomy_days'] : null,
+					'chat_available' => isset( $data['chat_available'] ) ? (bool) $data['chat_available'] : true,
 				)
 			);
 			return;

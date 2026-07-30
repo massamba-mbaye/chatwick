@@ -161,6 +161,18 @@ class WAICB_Admin_Settings {
 		$bubble_icon = isset( $_POST['waicb_bubble_icon'] ) ? esc_url_raw( wp_unslash( $_POST['waicb_bubble_icon'] ) ) : '';
 		update_option( 'waicb_bubble_icon', $bubble_icon );
 
+		// Repli « parler à un humain » à court de crédits.
+		update_option( 'waicb_handoff_enabled', isset( $_POST['waicb_handoff_enabled'] ) ? 1 : 0 );
+
+		// Numéro WhatsApp : on ne garde que les chiffres (format international sans +).
+		$wa = isset( $_POST['waicb_whatsapp_number'] ) ? preg_replace( '/\D+/', '', wp_unslash( $_POST['waicb_whatsapp_number'] ) ) : '';
+		update_option( 'waicb_whatsapp_number', $wa );
+
+		$handoff_email = isset( $_POST['waicb_handoff_email'] ) ? sanitize_email( wp_unslash( $_POST['waicb_handoff_email'] ) ) : '';
+		update_option( 'waicb_handoff_email', $handoff_email );
+
+		update_option( 'waicb_handoff_message', sanitize_textarea_field( wp_unslash( isset( $_POST['waicb_handoff_message'] ) ? $_POST['waicb_handoff_message'] : '' ) ) );
+
 		// Display rules.
 		$display_mode = isset( $_POST['waicb_display_mode'] ) && in_array( wp_unslash( $_POST['waicb_display_mode'] ), array( 'all', 'specific', 'exclude' ), true )
 			? sanitize_text_field( wp_unslash( $_POST['waicb_display_mode'] ) )

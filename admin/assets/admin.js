@@ -79,6 +79,12 @@
                         '%s', Number( d.data.autonomy_days ).toLocaleString( 'fr-FR' )
                     );
                 }
+
+                // Relance recharge : crédits épuisés (ou chat indisponible).
+                var nudge = document.getElementById( 'waicb-recharge-nudge' );
+                if ( nudge && ( d.data.credits <= 0 || d.data.chat_available === false ) ) {
+                    nudge.style.display = '';
+                }
             } else {
                 creditsEl.textContent = waicbAdmin.i18n.creditsUnavailable;
             }

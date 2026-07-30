@@ -2,21 +2,21 @@
 # This file is distributed under the GPL v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Chatwick 1.9.1\n"
+"Project-Id-Version: Chatwick 1.10.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/app\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-07-28T01:16:45+00:00\n"
+"POT-Creation-Date: 2026-07-30T15:53:53+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: chatwick\n"
 
 #. Plugin Name of the plugin
 #: chatwick.php
-#: admin/views/settings-page.php:53
+#: admin/views/settings-page.php:58
 #: includes/class-admin-settings.php:36
 #: includes/class-admin-settings.php:37
 msgid "Chatwick"
@@ -73,7 +73,7 @@ msgid "Utilisateur"
 msgstr ""
 
 #: admin/views/conversation-detail.php:53
-#: admin/views/settings-page.php:158
+#: admin/views/settings-page.php:181
 msgid "Assistant"
 msgstr ""
 
@@ -93,12 +93,12 @@ msgid "Conversations"
 msgstr ""
 
 #: admin/views/conversations-page.php:25
-#: admin/views/settings-page.php:83
+#: admin/views/settings-page.php:88
 msgid "Crédits :"
 msgstr ""
 
 #: admin/views/conversations-page.php:30
-#: admin/views/settings-page.php:86
+#: admin/views/settings-page.php:91
 msgid "Recharger"
 msgstr ""
 
@@ -135,7 +135,7 @@ msgid "Voir"
 msgstr ""
 
 #: admin/views/conversations-page.php:91
-#: admin/views/settings-page.php:189
+#: admin/views/settings-page.php:212
 msgid "Supprimer"
 msgstr ""
 
@@ -203,245 +203,291 @@ msgstr ""
 msgid "Bonjour ! Comment puis-je vous aider ?"
 msgstr ""
 
-#: admin/views/settings-page.php:56
+#: admin/views/settings-page.php:61
 msgid "Réglages enregistrés."
 msgstr ""
 
-#: admin/views/settings-page.php:59
+#: admin/views/settings-page.php:64
 msgid "Toutes les conversations ont été supprimées."
 msgstr ""
 
-#: admin/views/settings-page.php:67
+#: admin/views/settings-page.php:72
 msgid "Chatbot en ligne."
 msgstr ""
 
-#: admin/views/settings-page.php:67
+#: admin/views/settings-page.php:72
 msgid "Votre assistant répond à vos visiteurs."
 msgstr ""
 
-#: admin/views/settings-page.php:71
+#: admin/views/settings-page.php:76
 #: includes/class-admin-settings.php:83
 msgid "Connecté à Chatwick."
 msgstr ""
 
-#: admin/views/settings-page.php:71
+#: admin/views/settings-page.php:76
 #: includes/class-admin-settings.php:84
 msgid "Activez le chatbot (étape 4) pour l'afficher sur le site."
 msgstr ""
 
-#: admin/views/settings-page.php:75
+#: admin/views/settings-page.php:80
 msgid "Configuration requise."
 msgstr ""
 
-#: admin/views/settings-page.php:75
+#: admin/views/settings-page.php:80
 msgid "Connectez votre compte Chatwick pour activer le chatbot."
 msgstr ""
 
-#: admin/views/settings-page.php:97
-msgid "Mise en route"
-msgstr ""
-
-#: admin/views/settings-page.php:98
-msgid "Quatre étapes pour mettre votre assistant en ligne."
-msgstr ""
-
-#: admin/views/settings-page.php:104
-msgid "Créez votre compte Chatwick"
-msgstr ""
-
-#: admin/views/settings-page.php:104
-msgid "25 conversations offertes"
-msgstr ""
-
-#: admin/views/settings-page.php:105
-msgid "Gratuit, sans carte bancaire. Vous obtiendrez une clé de compte à coller à l'étape 2."
-msgstr ""
-
-#: admin/views/settings-page.php:106
-msgid "Créer un compte (gratuit)"
-msgstr ""
-
-#: admin/views/settings-page.php:114
-msgid "Connectez votre clé"
-msgstr ""
-
-#: admin/views/settings-page.php:115
-msgid "Collez la clé de compte récupérée sur Chatwick, puis testez la connexion."
+#. translators: %s: recharge page URL
+#: admin/views/settings-page.php:102
+#, php-format
+msgid "<strong>Vos crédits sont épuisés.</strong> L'assistant IA est en pause sur votre site (les visiteurs voient le repli « parler à un humain »). <a href=\"%s\" target=\"_blank\" rel=\"noopener\">Rechargez maintenant</a> pour le réactiver."
 msgstr ""
 
 #: admin/views/settings-page.php:120
+msgid "Mise en route"
+msgstr ""
+
+#: admin/views/settings-page.php:121
+msgid "Quatre étapes pour mettre votre assistant en ligne."
+msgstr ""
+
+#: admin/views/settings-page.php:127
+msgid "Créez votre compte Chatwick"
+msgstr ""
+
+#: admin/views/settings-page.php:127
+msgid "25 conversations offertes"
+msgstr ""
+
+#: admin/views/settings-page.php:128
+msgid "Gratuit, sans carte bancaire. Vous obtiendrez une clé de compte à coller à l'étape 2."
+msgstr ""
+
+#: admin/views/settings-page.php:129
+msgid "Créer un compte (gratuit)"
+msgstr ""
+
+#: admin/views/settings-page.php:137
+msgid "Connectez votre clé"
+msgstr ""
+
+#: admin/views/settings-page.php:138
+msgid "Collez la clé de compte récupérée sur Chatwick, puis testez la connexion."
+msgstr ""
+
+#: admin/views/settings-page.php:143
 msgid "Tester la connexion"
 msgstr ""
 
-#: admin/views/settings-page.php:123
+#: admin/views/settings-page.php:146
 msgid "Gérer mes crédits / Recharger"
 msgstr ""
 
-#: admin/views/settings-page.php:126
+#: admin/views/settings-page.php:149
 msgid "La clé reste chiffrée. Aucune clé OpenAI ou Anthropic à fournir. Laissez vide pour conserver la valeur actuelle."
 msgstr ""
 
-#: admin/views/settings-page.php:134
+#: admin/views/settings-page.php:157
 msgid "Personnalisez l'assistant"
 msgstr ""
 
-#: admin/views/settings-page.php:135
+#: admin/views/settings-page.php:158
 msgid "Décrivez le rôle et le ton de votre bot. Modifiable à tout moment dans l'onglet « Assistant »."
 msgstr ""
 
-#: admin/views/settings-page.php:136
+#: admin/views/settings-page.php:159
 msgid "Personnaliser le ton →"
 msgstr ""
 
-#: admin/views/settings-page.php:144
+#: admin/views/settings-page.php:167
 msgid "Activez le chatbot"
 msgstr ""
 
-#: admin/views/settings-page.php:145
+#: admin/views/settings-page.php:168
 msgid "Affichez la bulle de chat sur votre site. Choisissez les pages dans l'onglet « Affichage »."
 msgstr ""
 
-#: admin/views/settings-page.php:149
+#: admin/views/settings-page.php:172
 msgid "Afficher le chatbot sur le site"
 msgstr ""
 
-#: admin/views/settings-page.php:159
+#: admin/views/settings-page.php:182
 msgid "Apparence"
 msgstr ""
 
-#: admin/views/settings-page.php:160
+#: admin/views/settings-page.php:183
 msgid "Affichage"
 msgstr ""
 
-#: admin/views/settings-page.php:161
+#: admin/views/settings-page.php:184
 msgid "Avancé"
 msgstr ""
 
-#: admin/views/settings-page.php:167
+#: admin/views/settings-page.php:190
 msgid "Instructions de l'assistant (persona)"
 msgstr ""
 
-#: admin/views/settings-page.php:169
+#: admin/views/settings-page.php:192
 msgid "Ex. : Tu es l'assistant du site Exemple. Réponds en français, de façon concise et chaleureuse, à propos de nos services."
 msgstr ""
 
-#: admin/views/settings-page.php:170
+#: admin/views/settings-page.php:193
 msgid "transmis à Chatwick à chaque message."
 msgstr ""
 
-#: admin/views/settings-page.php:173
+#: admin/views/settings-page.php:196
 msgid "Message de bienvenue"
 msgstr ""
 
-#: admin/views/settings-page.php:182
+#: admin/views/settings-page.php:205
 msgid "Icône de la bulle"
 msgstr ""
 
-#: admin/views/settings-page.php:188
+#: admin/views/settings-page.php:211
 msgid "Choisir une image"
 msgstr ""
 
-#: admin/views/settings-page.php:190
+#: admin/views/settings-page.php:213
 msgid "Remplace l'icône par défaut dans la bulle flottante. Taille recommandée : 56×56 px."
 msgstr ""
 
-#: admin/views/settings-page.php:194
+#: admin/views/settings-page.php:217
 msgid "Titre du widget"
 msgstr ""
 
-#: admin/views/settings-page.php:198
+#: admin/views/settings-page.php:221
 msgid "Couleur principale"
 msgstr ""
 
-#: admin/views/settings-page.php:202
+#: admin/views/settings-page.php:225
 msgid "Position"
 msgstr ""
 
-#: admin/views/settings-page.php:205
+#: admin/views/settings-page.php:228
 msgid "Bas droite"
 msgstr ""
 
-#: admin/views/settings-page.php:206
+#: admin/views/settings-page.php:229
 msgid "Bas gauche"
 msgstr ""
 
-#: admin/views/settings-page.php:211
+#: admin/views/settings-page.php:234
 msgid "Effet de la bulle"
 msgstr ""
 
-#: admin/views/settings-page.php:214
+#: admin/views/settings-page.php:237
 msgid "Aucun"
 msgstr ""
 
-#: admin/views/settings-page.php:215
+#: admin/views/settings-page.php:238
 msgid "Ombre douce"
 msgstr ""
 
-#: admin/views/settings-page.php:216
+#: admin/views/settings-page.php:239
 msgid "Halo lumineux"
 msgstr ""
 
-#: admin/views/settings-page.php:217
+#: admin/views/settings-page.php:240
 msgid "Halo + pulsation"
 msgstr ""
 
-#: admin/views/settings-page.php:219
+#: admin/views/settings-page.php:242
 msgid "Rend la bulle plus visible sur le site. Le halo reprend votre couleur principale."
 msgstr ""
 
-#: admin/views/settings-page.php:229
+#: admin/views/settings-page.php:252
 msgid "Où afficher le chatbot"
 msgstr ""
 
-#: admin/views/settings-page.php:231
+#: admin/views/settings-page.php:254
 msgid "Sur toutes les pages"
 msgstr ""
 
-#: admin/views/settings-page.php:232
+#: admin/views/settings-page.php:255
 msgid "Uniquement sur les pages sélectionnées"
 msgstr ""
 
-#: admin/views/settings-page.php:233
+#: admin/views/settings-page.php:256
 msgid "Sur toutes les pages sauf les sélectionnées"
 msgstr ""
 
-#: admin/views/settings-page.php:237
+#: admin/views/settings-page.php:260
 msgid "Pages"
 msgstr ""
 
-#: admin/views/settings-page.php:248
+#: admin/views/settings-page.php:271
 msgid "Aucune page trouvée."
 msgstr ""
 
-#: admin/views/settings-page.php:251
+#: admin/views/settings-page.php:274
 msgid "Le shortcode [waicb_chatbot] fonctionne toujours indépendamment de cette règle."
 msgstr ""
 
-#: admin/views/settings-page.php:261
+#: admin/views/settings-page.php:284
 msgid "Suggestions de questions"
 msgstr ""
 
-#: admin/views/settings-page.php:264
+#: admin/views/settings-page.php:287
 msgid "Une suggestion par ligne. Affichées comme boutons cliquables au démarrage du chat."
 msgstr ""
 
-#: admin/views/settings-page.php:268
+#: admin/views/settings-page.php:291
 msgid "Durée du cookie (jours)"
 msgstr ""
 
-#: admin/views/settings-page.php:275
+#: admin/views/settings-page.php:296
+msgid "Repli « parler à un humain » (à court de crédits)"
+msgstr ""
+
+#: admin/views/settings-page.php:297
+msgid "Quand vos crédits sont épuisés, l'assistant IA est masqué et le visiteur peut vous joindre par WhatsApp ou laisser un message."
+msgstr ""
+
+#: admin/views/settings-page.php:300
+msgid "Activer le repli"
+msgstr ""
+
+#: admin/views/settings-page.php:304
+msgid "Proposer un contact humain quand le chatbot est indisponible"
+msgstr ""
+
+#: admin/views/settings-page.php:309
+msgid "Numéro WhatsApp"
+msgstr ""
+
+#: admin/views/settings-page.php:312
+msgid "Format international sans le +, ex. 221771234567. Laisser vide pour n'utiliser que le formulaire."
+msgstr ""
+
+#: admin/views/settings-page.php:316
+msgid "E-mail de réception"
+msgstr ""
+
+#: admin/views/settings-page.php:319
+msgid "Où recevoir les messages laissés par les visiteurs. Par défaut, l'e-mail d'administration du site."
+msgstr ""
+
+#: admin/views/settings-page.php:323
+msgid "Message affiché"
+msgstr ""
+
+#: admin/views/settings-page.php:325
+msgid "Notre assistant est momentanément indisponible. Écrivez-nous, nous vous répondrons vite !"
+msgstr ""
+
+#: admin/views/settings-page.php:332
 msgid "Enregistrer les réglages"
 msgstr ""
 
-#: admin/views/settings-page.php:280
+#: admin/views/settings-page.php:337
 msgid "Zone de danger"
 msgstr ""
 
-#: admin/views/settings-page.php:281
+#: admin/views/settings-page.php:338
 msgid "Cette action supprime définitivement toutes les conversations et logs."
 msgstr ""
 
-#: admin/views/settings-page.php:285
+#: admin/views/settings-page.php:342
 msgid "Vider toutes les conversations"
 msgstr ""
 
@@ -457,10 +503,10 @@ msgstr ""
 #: includes/class-admin-kb.php:114
 #: includes/class-admin-kb.php:135
 #: includes/class-admin-settings.php:117
-#: includes/class-admin-settings.php:189
-#: includes/class-rest-api.php:73
-#: includes/class-rest-api.php:146
-#: includes/class-rest-api.php:206
+#: includes/class-admin-settings.php:201
+#: includes/class-rest-api.php:213
+#: includes/class-rest-api.php:286
+#: includes/class-rest-api.php:346
 msgid "Accès refusé."
 msgstr ""
 
@@ -564,7 +610,7 @@ msgstr ""
 msgid "Clé de compte Chatwick non configurée."
 msgstr ""
 
-#: includes/class-cloud-chat.php:86
+#: includes/class-cloud-chat.php:90
 msgid "Réponse Cloud inattendue."
 msgstr ""
 
@@ -572,19 +618,59 @@ msgstr ""
 msgid "Clé de compte Chatwick manquante (menu Réglages)."
 msgstr ""
 
-#: includes/class-rest-api.php:48
+#: includes/class-rest-api.php:128
+msgid "Message envoyé."
+msgstr ""
+
+#: includes/class-rest-api.php:137
+msgid "Veuillez saisir un message."
+msgstr ""
+
+#: includes/class-rest-api.php:146
+msgid "Un visiteur a laissé un message alors que l'assistant IA était indisponible :"
+msgstr ""
+
+#: includes/class-rest-api.php:149
+msgid "Nom :"
+msgstr ""
+
+#: includes/class-rest-api.php:152
+msgid "E-mail :"
+msgstr ""
+
+#: includes/class-rest-api.php:154
+msgid "Message :"
+msgstr ""
+
+#: includes/class-rest-api.php:156
+msgid "Page :"
+msgstr ""
+
+#: includes/class-rest-api.php:163
+msgid "Nouveau message depuis votre chatbot (crédits épuisés)"
+msgstr ""
+
+#: includes/class-rest-api.php:170
+msgid "Message envoyé. Nous vous répondrons bientôt."
+msgstr ""
+
+#: includes/class-rest-api.php:171
+msgid "L'envoi a échoué, réessayez plus tard."
+msgstr ""
+
+#: includes/class-rest-api.php:188
 msgid "Le chatbot est désactivé."
 msgstr ""
 
-#: includes/class-rest-api.php:157
+#: includes/class-rest-api.php:297
 msgid "Clé de compte manquante. Enregistrez d'abord les réglages."
 msgstr ""
 
-#: includes/class-rest-api.php:185
+#: includes/class-rest-api.php:325
 msgid "Connexion réussie ✓ (clé valide)"
 msgstr ""
 
-#: includes/class-rest-api.php:212
+#: includes/class-rest-api.php:352
 msgid "Clé de compte non configurée."
 msgstr ""
 
@@ -611,22 +697,54 @@ msgstr ""
 msgid "Assistant IA"
 msgstr ""
 
-#: public/class-chatbot-widget.php:94
+#: public/class-chatbot-widget.php:102
 #: public/views/chatbot-widget.php:126
 msgid "Écrivez votre message…"
 msgstr ""
 
-#: public/class-chatbot-widget.php:95
+#: public/class-chatbot-widget.php:103
 #: public/views/chatbot-widget.php:134
 msgid "Envoyer"
 msgstr ""
 
-#: public/class-chatbot-widget.php:96
+#: public/class-chatbot-widget.php:104
 msgid "Une erreur est survenue. Veuillez réessayer."
 msgstr ""
 
-#: public/class-chatbot-widget.php:97
+#: public/class-chatbot-widget.php:105
 msgid "Réinitialiser la conversation ? Les messages affichés seront effacés."
+msgstr ""
+
+#: public/class-chatbot-widget.php:107
+msgid "Notre assistant est momentanément indisponible."
+msgstr ""
+
+#: public/class-chatbot-widget.php:108
+msgid "Discuter sur WhatsApp"
+msgstr ""
+
+#: public/class-chatbot-widget.php:109
+msgid "ou laissez-nous un message"
+msgstr ""
+
+#: public/class-chatbot-widget.php:110
+msgid "Votre nom"
+msgstr ""
+
+#: public/class-chatbot-widget.php:111
+msgid "Votre e-mail"
+msgstr ""
+
+#: public/class-chatbot-widget.php:112
+msgid "Votre message"
+msgstr ""
+
+#: public/class-chatbot-widget.php:113
+msgid "Envoyer le message"
+msgstr ""
+
+#: public/class-chatbot-widget.php:114
+msgid "Bonjour, je vous contacte depuis votre site."
 msgstr ""
 
 #. translators: %s: chatbot widget title

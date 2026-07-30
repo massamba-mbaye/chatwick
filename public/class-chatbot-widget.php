@@ -90,11 +90,28 @@ class WAICB_Chatbot_Widget {
 				'cookieDays'     => (int) get_option( 'waicb_cookie_days', 90 ),
 				'quickReplies'   => array_values( array_filter( array_map( 'trim', explode( "\n", get_option( 'waicb_quick_replies', '' ) ) ) ) ),
 				'bubbleIcon'     => get_option( 'waicb_bubble_icon', '' ),
+				// Repli « parler à un humain » à court de crédits.
+				'statusUrl'      => rest_url( 'waicb/v1/status' ),
+				'handoffUrl'     => rest_url( 'waicb/v1/handoff' ),
+				'handoff'        => array(
+					'enabled'  => (bool) get_option( 'waicb_handoff_enabled', true ),
+					'whatsapp' => preg_replace( '/\D+/', '', (string) get_option( 'waicb_whatsapp_number', '' ) ),
+					'message'  => (string) get_option( 'waicb_handoff_message', '' ),
+				),
 				'i18n'           => array(
-					'placeholder'  => __( 'Écrivez votre message…', 'chatwick' ),
-					'send'         => __( 'Envoyer', 'chatwick' ),
-					'errorMessage' => __( 'Une erreur est survenue. Veuillez réessayer.', 'chatwick' ),
-					'confirmReset' => __( 'Réinitialiser la conversation ? Les messages affichés seront effacés.', 'chatwick' ),
+					'placeholder'   => __( 'Écrivez votre message…', 'chatwick' ),
+					'send'          => __( 'Envoyer', 'chatwick' ),
+					'errorMessage'  => __( 'Une erreur est survenue. Veuillez réessayer.', 'chatwick' ),
+					'confirmReset'  => __( 'Réinitialiser la conversation ? Les messages affichés seront effacés.', 'chatwick' ),
+					// Repli humain.
+					'handoffIntro'  => __( 'Notre assistant est momentanément indisponible.', 'chatwick' ),
+					'handoffWhatsApp' => __( 'Discuter sur WhatsApp', 'chatwick' ),
+					'handoffOr'     => __( 'ou laissez-nous un message', 'chatwick' ),
+					'handoffName'   => __( 'Votre nom', 'chatwick' ),
+					'handoffEmail'  => __( 'Votre e-mail', 'chatwick' ),
+					'handoffMsg'    => __( 'Votre message', 'chatwick' ),
+					'handoffSend'   => __( 'Envoyer le message', 'chatwick' ),
+					'handoffWaMsg'  => __( 'Bonjour, je vous contacte depuis votre site.', 'chatwick' ),
 				),
 			)
 		);

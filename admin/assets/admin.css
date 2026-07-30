@@ -217,3 +217,15 @@
 #waicb-test-cloud-result.success { color: #16a34a; }
 #waicb-test-cloud-result.error { color: #dc2626; }
 .waicb-hint { color: #646970; font-size: 12px; margin: 6px 0 0; }
+
+/* Relance de recharge (crédits épuisés) */
+.waicb-recharge-nudge {
+    margin: 12px 0;
+    padding: 12px 16px;
+    background: #fef3c7;
+    border: 1px solid #fcd34d;
+    border-radius: 8px;
+    color: #92400e;
+    font-size: 14px;
+}
+.waicb-recharge-nudge a { color: #92400e; font-weight: 600; }

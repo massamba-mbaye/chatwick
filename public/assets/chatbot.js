@@ -231,6 +231,8 @@
     var welcomeShown     = false;
     var lastUserMsgEl    = null; // For tick update.
     var conversationStarted = false;
+    var handoffActive       = false; // repli « parler à un humain » actif
+    var availabilityChecked = false; // statut Cloud déjà interrogé pour cette ouverture
 
     // ── Scroll helpers ───────────────────────────────────────────────────────
     function isNearBottom() {
@@ -270,6 +272,7 @@
         panel.setAttribute( 'aria-modal', 'true' );
         input.focus();
         showWelcome();
+        checkChatAvailability(); // bascule en repli humain si crédits épuisés
     }
 
     function closePanel() {
@@ -334,6 +337,7 @@
     // If shortcode mode, show welcome immediately (sauf conversation déjà en cours).
     if ( panel.dataset.mode === 'shortcode' ) {
         showWelcome();
+        checkChatAvailability();
     }
 
     // ── Avatar helper ────────────────────────────────────────────────────────
@@ -548,13 +552,121 @@
                     ? data.data.message
                     : waicbConfig.i18n.errorMessage;
                 appendMessage( 'error', errMsg, false, true );
+                checkChatAvailability( true ); // crédits épuisés ? -> repli humain
             }
         } )
         .catch( function () {
             hideTyping();
             sendBtn.disabled = false;
             appendMessage( 'error', waicbConfig.i18n.errorMessage, false, true );
+            checkChatAvailability( true );
         } );
+    }
+
+    // ── Repli « parler à un humain » (à court de crédits) ────────────────────
+    // Le chat IA est masqué et remplacé par un contact WhatsApp + un formulaire.
+    function checkChatAvailability( force ) {
+        var ho = waicbConfig.handoff;
+        if ( ! ho || ! ho.enabled || handoffActive || ! waicbConfig.statusUrl ) { return; }
+        if ( availabilityChecked && ! force ) { return; }
+        availabilityChecked = true;
+        fetch( waicbConfig.statusUrl, { credentials: 'same-origin' } )
+            .then( function ( res ) { return res.json(); } )
+            .then( function ( data ) {
+                if ( data && data.chat_available === false ) { enterHandoffMode(); }
+            } )
+            .catch( function () {} );
+    }
+
+    function enterHandoffMode() {
+        if ( handoffActive ) { return; }
+        handoffActive = true;
+
+        // Masque le composer IA + les suggestions.
+        var footer     = panel.querySelector( '.waicb-panel__footer' );
+        var footerMeta = panel.querySelector( '.waicb-panel__footer-meta' );
+        if ( footer )     { footer.style.display = 'none'; }
+        if ( footerMeta ) { footerMeta.style.display = 'none'; }
+        hideQuickReplies();
+
+        var ho = waicbConfig.handoff || {};
+        var t  = waicbConfig.i18n;
+
+        var box = document.createElement( 'div' );
+        box.className = 'waicb-handoff';
+
+        var intro = document.createElement( 'p' );
+        intro.className   = 'waicb-handoff__intro';
+        intro.textContent = ho.message || t.handoffIntro;
+        box.appendChild( intro );
+
+        // Bouton WhatsApp (si un numéro est configuré).
+        if ( ho.whatsapp ) {
+            var wa = document.createElement( 'a' );
+            wa.className   = 'waicb-handoff__wa';
+            wa.href        = 'https://wa.me/' + ho.whatsapp + '?text=' + encodeURIComponent( t.handoffWaMsg );
+            wa.target      = '_blank';
+            wa.rel         = 'noopener noreferrer';
+            wa.textContent = t.handoffWhatsApp;
+            box.appendChild( wa );
+
+            var or = document.createElement( 'div' );
+            or.className   = 'waicb-handoff__or';
+            or.textContent = t.handoffOr;
+            box.appendChild( or );
+        }
+
+        // Formulaire de repli (envoyé par e-mail au propriétaire).
+        var form = document.createElement( 'form' );
+        form.className = 'waicb-handoff__form';
+
+        var nameI = document.createElement( 'input' );
+        nameI.type = 'text'; nameI.placeholder = t.handoffName; nameI.className = 'waicb-handoff__input';
+        var emailI = document.createElement( 'input' );
+        emailI.type = 'email'; emailI.placeholder = t.handoffEmail; emailI.className = 'waicb-handoff__input';
+        var msgI = document.createElement( 'textarea' );
+        msgI.rows = 3; msgI.placeholder = t.handoffMsg; msgI.className = 'waicb-handoff__input';
+        // Honeypot (piège à bots, invisible).
+        var hp = document.createElement( 'input' );
+        hp.type = 'text'; hp.name = 'website'; hp.tabIndex = -1; hp.setAttribute( 'autocomplete', 'off' );
+        hp.style.cssText = 'position:absolute;left:-9999px;width:1px;height:1px;';
+        var sendB = document.createElement( 'button' );
+        sendB.type = 'submit'; sendB.className = 'waicb-handoff__send'; sendB.textContent = t.handoffSend;
+
+        form.appendChild( nameI ); form.appendChild( emailI ); form.appendChild( msgI );
+        form.appendChild( hp ); form.appendChild( sendB );
+
+        form.addEventListener( 'submit', function ( e ) {
+            e.preventDefault();
+            if ( ! msgI.value.trim() ) { msgI.focus(); return; }
+            sendB.disabled = true;
+            fetch( waicbConfig.handoffUrl, {
+                method:      'POST',
+                credentials: 'same-origin',
+                headers:     { 'Content-Type': 'application/json', 'X-WP-Nonce': waicbConfig.restNonce },
+                body: JSON.stringify( {
+                    name:    nameI.value,
+                    email:   emailI.value,
+                    message: msgI.value,
+                    website: hp.value,
+                    page:    location.href,
+                    nonce:   waicbConfig.nonce,
+                } ),
+            } )
+            .then( function ( res ) { return res.json(); } )
+            .then( function ( data ) {
+                var note = document.createElement( 'p' );
+                note.className   = 'waicb-handoff__note';
+                note.textContent = ( data && data.data && data.data.message ) ? data.data.message : t.handoffSend;
+                box.replaceChild( note, form );
+                scrollToBottom();
+            } )
+            .catch( function () { sendB.disabled = false; } );
+        } );
+
+        box.appendChild( form );
+        messages.appendChild( box );
+        scrollToBottom();
     }
 
     sendBtn.addEventListener( 'click', sendMessage );

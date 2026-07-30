@@ -3,7 +3,7 @@ Contributors:      massambambaye
 Tags:              chatbot, ai, assistant, chatwick, support
 Requires at least: 6.0
 Tested up to:      7.0
-Stable tag:        1.9.1
+Stable tag:        1.10.0
 Requires PHP:      7.4
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -96,6 +96,10 @@ By installing this plugin and connecting your account key, you agree to the Chat
 
 == Changelog ==
 
+= 1.10.0 =
+* New: "Talk to a human" fallback. When your credits run out, the AI assistant is hidden and visitors can reach you on WhatsApp or leave a message (sent to you by email). Configure it under Settings > Advanced.
+* New: a reminder appears in the admin when your credits are exhausted, so you know to recharge.
+
 = 1.9.1 =
 * Improve: the assistant now introduces itself with your site's name when no custom persona is set, instead of a generic message.
 * Improve: full internationalization of the admin interface. The knowledge base sync screen and the media picker labels now go through the translation system, and the translation template (.pot) has been refreshed.
@@ -176,6 +180,9 @@ By installing this plugin and connecting your account key, you agree to the Chat
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.10.0 =
+When your credits run out, the assistant now offers visitors a WhatsApp contact or a message form instead of an error, and reminds you to recharge.
 
 = 1.9.1 =
 The assistant now introduces itself with your site's name, and the admin interface is fully translatable with a refreshed translation template.
